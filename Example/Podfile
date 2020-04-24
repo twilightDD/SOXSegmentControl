@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SOXSegmentControl_Example' do
+  pod 'SOXSegmentControl', :path => '../'
+
+  target 'SOXSegmentControl_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
