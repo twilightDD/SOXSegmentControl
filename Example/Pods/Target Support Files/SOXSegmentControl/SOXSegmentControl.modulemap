@@ -1,0 +1,6 @@
+framework module SOXSegmentControl {
+  umbrella header "SOXSegmentControl-umbrella.h"
+
+  export *
+  module * { export * }
+}

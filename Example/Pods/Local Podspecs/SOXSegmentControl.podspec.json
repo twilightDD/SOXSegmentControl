@@ -1,0 +1,22 @@
+{
+  "name": "SOXSegmentControl",
+  "version": "0.1.0",
+  "summary": "A short description of SOXSegmentControl.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/twilightDD/SOXSegmentControl",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "twilightDD": "peter@2sox.de"
+  },
+  "source": {
+    "git": "https://github.com/twilightDD/SOXSegmentControl.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "SOXSegmentControl/Classes/**/*"
+}

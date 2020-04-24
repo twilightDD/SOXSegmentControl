@@ -1,0 +1,16 @@
+PODS:
+  - SOXSegmentControl (0.1.0)
+
+DEPENDENCIES:
+  - SOXSegmentControl (from `../`)
+
+EXTERNAL SOURCES:
+  SOXSegmentControl:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SOXSegmentControl: d4288b230e64bf2bbd153e44372569df610db0fe
+
+PODFILE CHECKSUM: 97f030a757d7fed6895bfb6d6845f658d60bddcc
+
+COCOAPODS: 1.9.1
