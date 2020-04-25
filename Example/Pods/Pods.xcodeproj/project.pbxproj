@@ -16,6 +16,7 @@
 		A1ACA3935B5B8BF4A6FE4DEF3801AF87 /* Pods-SOXSegmentControl_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1ABFFE969B71AC2A6F6C10959BD844 /* Pods-SOXSegmentControl_Example-dummy.m */; };
 		A295ACDA94E8C4AED16A9FF0C0DE6A9D /* Pods-SOXSegmentControl_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C02629D754EB06C6AADA8F99783C4D8 /* Pods-SOXSegmentControl_Tests-dummy.m */; };
 		C33DAF6030D611AF867021C2C677F74D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		D079053C2453CF5B0075CB5D /* SOXSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E1D7719C2EED2DF59562C8019CE314 /* SOXSegmentControl.swift */; };
 		D185055206E7CA6EBC4CE38910D304B0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		D9D8C3EAB0B15B7F0BB5B70DF55A4746 /* SOXSegmentControl-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C56CC67E08115D10E1CB22454E7A9E /* SOXSegmentControl-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -370,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D079053C2453CF5B0075CB5D /* SOXSegmentControl.swift in Sources */,
 				A1ACA3935B5B8BF4A6FE4DEF3801AF87 /* Pods-SOXSegmentControl_Example-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
