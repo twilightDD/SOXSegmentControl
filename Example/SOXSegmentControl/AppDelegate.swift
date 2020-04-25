@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  SOXSegmentControl
 //
-//  Created by twilightDD on 04/24/2020.
-//  Copyright (c) 2020 twilightDD. All rights reserved.
+//  Created by Peter Hauke / 2sox on 04/24/2020.
+//  Copyright (c) 2020 Peter Hauke / 2sox. All rights reserved.
 //
 
 import UIKit
