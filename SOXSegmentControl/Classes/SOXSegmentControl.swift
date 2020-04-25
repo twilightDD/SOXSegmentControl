@@ -50,7 +50,7 @@ extension SOXSegmentDescriptor {
 
 //MARK: -
 //MARK: - SOXSegmentControl
-class SOXSegmentControl: UIControl {
+open class SOXSegmentControl: UIControl {
     
     //MARK: Enums
     enum SegmentType: Int {
