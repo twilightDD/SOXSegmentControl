@@ -15,6 +15,13 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		73E440BA5F73BF94CF5F9D07 /* Pods_SOXSegmentControl_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDDA3B4D3B6C18ADEB3500C1 /* Pods_SOXSegmentControl_Tests.framework */; };
 		7D6048AA8DB90F7571958C8D /* Pods_SOXSegmentControl_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DAD7E7E02F62412A774F8F /* Pods_SOXSegmentControl_Example.framework */; };
+		D07905402453D2870075CB5D /* SimpleTextSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079053F2453D2870075CB5D /* SimpleTextSegmentControlViewController.swift */; };
+		D07905422454637D0075CB5D /* SimpleImageSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07905412454637D0075CB5D /* SimpleImageSegmentControlViewController.swift */; };
+		D07905432454637D0075CB5D /* SimpleImageSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07905412454637D0075CB5D /* SimpleImageSegmentControlViewController.swift */; };
+		D0790545245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0790544245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift */; };
+		D0790546245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0790544245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift */; };
+		D0790548245468630075CB5D /* RainbowSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0790547245468630075CB5D /* RainbowSegmentControlViewController.swift */; };
+		D0790549245468630075CB5D /* RainbowSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0790547245468630075CB5D /* RainbowSegmentControlViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +53,10 @@
 		9F10C9A65AD4A7545F534E18 /* Pods-SOXSegmentControl_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOXSegmentControl_Tests.release.xcconfig"; path = "Target Support Files/Pods-SOXSegmentControl_Tests/Pods-SOXSegmentControl_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A481E9311CDE46EDAE29FFEF /* Pods-SOXSegmentControl_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOXSegmentControl_Example.debug.xcconfig"; path = "Target Support Files/Pods-SOXSegmentControl_Example/Pods-SOXSegmentControl_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		BDDA3B4D3B6C18ADEB3500C1 /* Pods_SOXSegmentControl_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SOXSegmentControl_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D079053F2453D2870075CB5D /* SimpleTextSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextSegmentControlViewController.swift; sourceTree = "<group>"; };
+		D07905412454637D0075CB5D /* SimpleImageSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleImageSegmentControlViewController.swift; sourceTree = "<group>"; };
+		D0790544245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextAndImageSegmentControlViewController.swift; sourceTree = "<group>"; };
+		D0790547245468630075CB5D /* RainbowSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowSegmentControlViewController.swift; sourceTree = "<group>"; };
 		F7C213728293C279A44DBFDC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +106,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				D079053E2453D26A0075CB5D /* Example View Controllers */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -137,6 +149,17 @@
 				F7C213728293C279A44DBFDC /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		D079053E2453D26A0075CB5D /* Example View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D079053F2453D2870075CB5D /* SimpleTextSegmentControlViewController.swift */,
+				D07905412454637D0075CB5D /* SimpleImageSegmentControlViewController.swift */,
+				D0790544245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift */,
+				D0790547245468630075CB5D /* RainbowSegmentControlViewController.swift */,
+			);
+			path = "Example View Controllers";
 			sourceTree = "<group>";
 		};
 		E5D36CC0390DFB9F0C6CA27B /* Frameworks */ = {
@@ -331,8 +354,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D07905422454637D0075CB5D /* SimpleImageSegmentControlViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				D07905402453D2870075CB5D /* SimpleTextSegmentControlViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				D0790545245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift in Sources */,
+				D0790548245468630075CB5D /* RainbowSegmentControlViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +367,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0790546245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift in Sources */,
+				D0790549245468630075CB5D /* RainbowSegmentControlViewController.swift in Sources */,
+				D07905432454637D0075CB5D /* SimpleImageSegmentControlViewController.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
