@@ -3,40 +3,40 @@
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
+# To learn more about a Podspec see https://guidespec.cocoapodspec.org/syntax/podspec.html
 #
 
-Pod::Spec.new do |s|
-  s.name             = 'SOXSegmentControl'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of SOXSegmentControl.'
+Pod::Spec.new do |spec|
+  spec.name             = 'SOXSegmentControl'
+  spec.version          = '0.1.0'
+  spec.summary          = 'Just another replacement for segment controls. Main difference is the option for a multilined segments.'
 
-# This description is used to generate tags and improve search results.
+# This description is used to generate tags and improve search resultspec.
 #   * Think: What does it do? Why did you write it? What is the focus?
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  spec.description      = 'As a lot of other cocoapods it allows to flexible configure you own segment control. 
+  But in different you have the option to order you segments in a multilined pattern.'
 
-  s.homepage         = 'https://github.com/twilightDD/SOXSegmentControl'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'twilightDD' => 'peter@2sox.de' }
-  s.source           = { :git => 'https://github.com/twilightDD/SOXSegmentControl.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  spec.homepage         = 'https://github.com/twilightDD/SOXSegmentControl'
+  # spec.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  spec.license          = { :type => 'MIT', :file => 'LICENSE' }
+  spec.author           = { 'twilightDD' => 'peter@2sox.de' }
+  spec.source           = { :git => 'https://github.com/twilightDD/SOXSegmentControl.git', :tag => spec.version.to_s }
+  # spec.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  spec.ios.deployment_target = '13.0'
+  spec.swift_version = '5.0'
 
-  s.source_files = 'SOXSegmentControl/Classes/**/*'
+  spec.source_files = 'SOXSegmentControl/Classes/**/*'
   
-  # s.resource_bundles = {
+  # spec.resource_bundles = {
   #   'SOXSegmentControl' => ['SOXSegmentControl/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  # spec.public_header_files = 'Pod/Classes/**/*.h'
+  # spec.frameworks = 'UIKit', 'MapKit'
+  # spec.dependency 'AFNetworking', '~> 2.3'
 end
