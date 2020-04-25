@@ -13,76 +13,130 @@
 import Foundation
 import UIKit
 
+
 //MARK: - SOXSegmentDescriptor
-struct SOXSegmentDescriptor {
-    var buttonTitle: String?
-    var buttonImageName: String?
+public struct SOXSegmentDescriptor: Equatable {
+    public var buttonTitle: String?
+    public var buttonImageName: String?
 
-    var selectedTextColor: UIColor = .label
-    var selectedTintColor: UIColor = .label
-    var unSelectedTextColor: UIColor = .lightGray
-    var unSelectedTintColor: UIColor = .lightGray
-    var underlineBarColor: UIColor = .darkGray
+    public var selectedTextColor: UIColor = .label
+    public var selectedTintColor: UIColor = .label
+    public var unSelectedTextColor: UIColor = .lightGray
+    public var unSelectedTintColor: UIColor = .lightGray
+    public var selectorColor: UIColor = .lightGray
 
-    var selectedFont : UIFont = UIFont.systemFont(ofSize: 15)
-    var unSelectedFont : UIFont = UIFont.systemFont(ofSize: 15)
-}
+    public var selectedFont : UIFont = UIFont.systemFont(ofSize: 15)
+    public var unSelectedFont : UIFont = UIFont.systemFont(ofSize: 15)
 
-//MARK: SOXSegmentDescriptor - Convenient Init
-extension SOXSegmentDescriptor {
+    // In case of doublets we need a distinctive marker; 220420, ph
+    private let uuid = UUID()
 
-    init(buttonTitle: String?,
-         buttonImageName: String?,
-         selectedColor: UIColor,
-         unSelectedColor: UIColor = .lightGray) {
+    public static func == (lhs: SOXSegmentDescriptor, rhs: SOXSegmentDescriptor)
+        -> Bool {
+            return lhs.uuid == rhs.uuid
+    }
+//}
+//
+////MARK: SOXSegmentDescriptor - Convenient Init
+//extension SOXSegmentDescriptor {
+
+    public init(buttonTitle: String? = nil,
+                buttonImageName: String? = nil,
+                selectedColor: UIColor? = .label,
+                unSelectedColor: UIColor? = .lightGray) {
 
         self.buttonTitle = buttonTitle
         self.buttonImageName = buttonImageName
 
-        self.selectedTextColor = selectedColor
-        self.selectedTintColor = selectedColor
-        self.underlineBarColor = selectedColor
+        self.selectedTextColor = selectedColor ?? .label
+        self.selectedTintColor = selectedColor ?? .label
+        self.selectorColor = selectedColor ?? .lightGray
 
-        self.unSelectedTextColor = unSelectedColor
-        self.unSelectedTintColor = unSelectedColor
+        self.unSelectedTextColor = unSelectedColor ?? .lightGray
+        self.unSelectedTintColor = unSelectedColor ?? .lightGray
+
     }
 }
 
 //MARK: -
 //MARK: - SOXSegmentControl
 open class SOXSegmentControl: UIControl {
-    
+
     //MARK: Enums
-    enum SegmentType: Int {
+    public enum SegmentType: Int {
         case normal
         case imageOnTop
         case imageOnly
     }
-    
-    enum SelectorType: Int {
-        case normal
+
+    public enum SelectorType: Int {
+        case none
+        case background
         case underlineBar
     }
-    
+
+    public enum SelectorStyle: Int {
+        case square
+        case round
+        case rounded // set selectorCornerRadius
+    }
+
     //MARK: - Lets and Vars
-    //MARK: Properties
+    //MARK: Selector Background Properties
+    private var selectorView: UIView? {
+        get {
+            if _selectorView != nil {
+                return _selectorView
+            }
+            else {
+                if selectorType == .none {
+                    return nil
+                }
+                else {
+                    // _selectorView = UIView()
+                    setupSelectorView()
+                    return _selectorView
+                }
+            }
+        }
+        set {
+            _selectorView = newValue
+        }
+    }
+    private var _selectorView: UIView?
+    public var animateSelectorMovement: Bool = true
+    public var selectorColor: UIColor = .darkGray { didSet { updateSelectorViewBackgroundColor() } }
+    public var selectorStyle: SelectorStyle = .square { didSet { updateSelectorViewStyle()} }
+    public var selectorType: SOXSegmentControl.SelectorType = .background { didSet { updateSelectorViewHeight() } }
+
+    public var selectorCornerRadius: CGFloat = 5.0 { didSet { updateSelectorViewStyle() } }
+    public var underlineBarSelectorHeight : CGFloat = 5.0  { didSet { updateSelectorViewHeight() } }
+
+    //MARK:
+
     var onValueChanged: ((_ index: Int)->())?
-    var selectedSegmentIndex: Int = 0  {
+    public var selectedSegmentIndex: Int = 0  {
         didSet {
             print("\(#function) selectedSegmentIndex didSet to \(selectedSegmentIndex)")
         } }
 
-    var type: SOXSegmentControl.SegmentType = .normal { didSet { updateView() } }
-    var selectorType: SOXSegmentControl.SelectorType = .normal { didSet { updateView() } }
+    public var type: SOXSegmentControl.SegmentType = .normal { didSet { updateView() } }
+
 
     var buttonTitles = [String]() { didSet { updateView() } }
     var buttonImageNames = [String]() { didSet { updateView() } }
-    var segmentDescriptors: [SOXSegmentDescriptor]? { didSet { updateView() } }
+    public var segmentDescriptors: [[SOXSegmentDescriptor]]? {
+        didSet {
+            updateSegments()
+            updateView()
 
-    var animateUnderlineBarMovement: Bool = true
+        } }
+    private var linearSegmentDescriptors: [SOXSegmentDescriptor]?
+
+
 
     // UI
-    var bottomBarHeight : CGFloat = 5.0  { didSet { updateView() } }
+
 
     var borderWidth: CGFloat = 0 { didSet { layer.borderWidth = borderWidth } }
     var borderColor: UIColor = .clear { didSet { layer.borderColor = borderColor.cgColor } }
@@ -92,32 +146,20 @@ open class SOXSegmentControl: UIControl {
     var selectedTintColor: UIColor = .label { didSet { updateView() } }
     var unSelectedTextColor: UIColor = .lightGray { didSet { updateView() } }
     var unSelectedTintColor: UIColor = .lightGray { didSet { updateView() } }
-    var underlineBarColor: UIColor = .darkGray { didSet { updateView() } }
-    
+
+
     var selectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
     var unSelectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
 
-    var isUnderlineBarRounded: Bool = false {
-        didSet {
-            if isUnderlineBarRounded == true {
-                underlineBarView.layer.cornerRadius = underlineBarView.frame.height/2
-            }
-            updateView()
-        }
-    }
 
-    var isSegmentRounded: Bool = false {
-        didSet {
-            if isSegmentRounded == true {
-                layer.cornerRadius = frame.height/2
-            }
-            updateView()
-        }
-    }
 
     //MARK: - Private Properties
-    private var buttons = [UIButton]()
-    private var underlineBarView: UIView!
+    private var segmentDescriptorsOfRows = [Int : [SOXSegmentDescriptor]]()
+
+    private var segments = [UIButton]()
+    private var segmentToRow = [UIButton : Int]()
+    private var segmentCount: Int = 0
+
 
     //MARK: - Open Methods
     open override func layoutSubviews() {
@@ -125,19 +167,18 @@ open class SOXSegmentControl: UIControl {
 
         updateView()
 
-        let _animated = animateUnderlineBarMovement
-        animateUnderlineBarMovement = false
-        setSelectedIndex(selectedSegmentIndex)
-        animateUnderlineBarMovement = _animated
+        //        let _animated = animateSelectorMovement
+        //        animateSelectorMovement = false
+        //        setSelectedIndex(selectedSegmentIndex)
+        //        animateSelectorMovement = _animated
     }
-
 
 
 
     open func setSelectedIndex(_ index: Int) {
         selectedSegmentIndex = index
 
-        for (index, button) in buttons.enumerated() {
+        for (index, button) in segments.enumerated() {
             button.tintColor = unSelectedTintColor(forButtonAtIndex: index)
             button.setTitleColor(unSelectedTextColor(forButtonAtIndex: index),
                                  for: .normal)
@@ -150,111 +191,102 @@ open class SOXSegmentControl: UIControl {
                                      for: .normal)
 
                 // Move underlineBar
-                moveUnderlineBar(toIndex: index)
+                moveSelectorView(toIndex: index)
             }
         }
     }
 
     open func changeSelectedColor(_ color: UIColor) {
+        guard let underlineBarView = self.selectorView
+            else { return }
+
         underlineBarView.backgroundColor = color
     }
 
     //MARK: - Private Methods
+    private func updateSegments() {
+        guard let segmentDescriptors = self.segmentDescriptors
+            else { return }
+
+        var gatheredSegmentDescriptors = [SOXSegmentDescriptor]()
+        for (row, segmentDescriptorsForRow) in segmentDescriptors.enumerated() {
+            segmentDescriptorsOfRows.updateValue(segmentDescriptorsForRow, forKey: row)
+            gatheredSegmentDescriptors.append(contentsOf: segmentDescriptorsForRow)
+
+        }
+
+        linearSegmentDescriptors = gatheredSegmentDescriptors
+    }
+
     private func updateView() {
         clipsToBounds = true
-        buttons.removeAll()
+        segments.removeAll()
         subviews.forEach( { $0.removeFromSuperview() } )
-        
+
         if type == .normal {
-            buttons = getButtonsForNormalSegment(hasTopImage: false)
+            segments = getButtonsForNormalSegment(hasTopImage: false)
         }  else if type == .imageOnTop {
-            buttons = getButtonsForNormalSegment(hasTopImage: true)
+            segments = getButtonsForNormalSegment(hasTopImage: true)
         } else if type == .imageOnly {
-            buttons = getButtonsForOnlyImageSegment()
+            segments = getButtonsForOnlyImageSegment()
         }
-        
-        if selectedSegmentIndex < buttons.count {
+
+        if selectedSegmentIndex < segments.count {
             print("updateView: selectedSegmentIndex \(selectedSegmentIndex)")
-            buttons[selectedSegmentIndex].tintColor = selectedTintColor(forButtonAtIndex: selectedSegmentIndex)
-            buttons[selectedSegmentIndex].setTitleColor(selectedTextColor(forButtonAtIndex: selectedSegmentIndex),
-                                                        for: .normal)
-            buttons[selectedSegmentIndex].titleLabel?.font = selectedFont(forButtonAtIndex: selectedSegmentIndex)
+            segments[selectedSegmentIndex].tintColor = selectedTintColor(forButtonAtIndex: selectedSegmentIndex)
+            segments[selectedSegmentIndex].setTitleColor(selectedTextColor(forButtonAtIndex: selectedSegmentIndex),
+                                                         for: .normal)
+            segments[selectedSegmentIndex].titleLabel?.font = selectedFont(forButtonAtIndex: selectedSegmentIndex)
         }
-        
-        setupUnderlineBar()
-        
-        addSubview(underlineBarView)
-        
-        let sv = UIStackView(arrangedSubviews: buttons)
-        sv.axis = .horizontal
-        sv.alignment = .fill
-        sv.distribution = .fillEqually//.fillProportionally
-        addSubview(sv)
-        
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        sv.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        sv.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        sv.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+
+        if let underlineBarView = self.selectorView {
+            addSubview(underlineBarView)
+        }
+
+        arrangeSegments()
+    }
+
+    private func arrangeSegments() {
+        guard let segmentDescriptors = self.segmentDescriptors
+            else { return}
+
+        // Outer StackView
+        let outerStackView = UIStackView()
+        outerStackView.axis = .vertical
+        outerStackView.alignment = .fill
+        outerStackView.distribution = .fillEqually
+
+        addSubview(outerStackView)
+        outerStackView.translatesAutoresizingMaskIntoConstraints = false
+        outerStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        outerStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        outerStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        outerStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+
+        var startCount = 0
+        for segmentDescriptorsForRow in segmentDescriptors {
+            let columnsCount = segmentDescriptorsForRow.count
+            let endCount = startCount + columnsCount - 1
+            let slice = segments[startCount...endCount]
+            startCount = startCount + columnsCount // without - 1!
+
+            let segmentsOfRow:[UIView] = Array(slice)
+
+            let rowStackView = UIStackView(arrangedSubviews: segmentsOfRow)
+            rowStackView.axis = .horizontal
+            rowStackView.alignment = .fill
+            rowStackView.distribution = .fillEqually//.fillProportionally
+
+            outerStackView.addArrangedSubview(rowStackView)
+            //outerStackView.updateConstraints()
+            //outerStackView.setNeedsLayout()
+            rowStackView.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
 
 
-    private func setupUnderlineBar() {
-        var selectorWidth = frame.width / CGFloat(buttonsCount())
 
-        if type == .imageOnly {
-            selectorWidth = frame.width / CGFloat(buttonsCount())
-        }
-        
-        if selectorType == .normal {
-            let underlineBarFrame = CGRect(x: 0,
-                                           y: 0,
-                                           width: selectorWidth,
-                                           height: frame.height)
-            underlineBarView = UIView(frame: underlineBarFrame)
 
-            if isSegmentRounded == true {
-                underlineBarView.layer.cornerRadius = frame.height / 2
-            }
-            else {
-                underlineBarView.layer.cornerRadius = 0
-            }
-        }
-        else if selectorType == .underlineBar {
-            let underlineBarFrame = CGRect(x: 0,
-                                           y: frame.height - bottomBarHeight,
-                                           width: selectorWidth,
-                                           height: bottomBarHeight)
-            underlineBarView = UIView(frame: underlineBarFrame)
-
-            if isUnderlineBarRounded == true {
-                underlineBarView.layer.cornerRadius = underlineBarView.frame.height / 2
-            }
-            else {
-                underlineBarView.layer.cornerRadius = 0
-            }
-        }
-        // backgroundcolor will be set on moveUnderlineBar
-        print("\(#function) - \(underlineBarView.frame)")
-    }
-
-    private func moveUnderlineBar(toIndex index: Int) {
-        let newXOrigin = frame.width/CGFloat(buttons.count) * CGFloat(index)
-
-        if animateUnderlineBarMovement == true {
-            UIView.animate(withDuration: 0.25,
-                           delay: 0,
-                           options: .curveEaseOut,
-                           animations: {
-                            self.underlineBarView.frame.origin.x = newXOrigin },
-                           completion: nil)
-        }
-        else {
-            underlineBarView.frame.origin.x = newXOrigin
-        }
-
-        underlineBarView.backgroundColor = underlineBarColor(forButtonAtIndex: index)
-    }
 
     private func getButtonsForNormalSegment(hasTopImage: Bool = false)
         -> [UIButton] {
@@ -291,9 +323,10 @@ open class SOXSegmentControl: UIControl {
                     }
                 }
 
+
                 newButtons.append(button)
             }
-            
+
             return newButtons
     }
 
@@ -330,15 +363,156 @@ open class SOXSegmentControl: UIControl {
 
             fatalError()
     }
+}
+
+//MARK: - Extension - Background Selector View
+extension SOXSegmentControl {
+    //    private func updateSelectorView() {
+    //        if selectorType == .none {
+    //            selectorView = nil
+    //            return
+    //        }
+    //
+    //        let selectorWidth = frame.width / CGFloat(buttonsCount())
+    //
+    //        var underlineBarFrame: CGRect?
+    //        if selectorType == .background {
+    //            underlineBarFrame = CGRect(x: 0,
+    //                                           y: 0,
+    //                                           width: selectorWidth,
+    //                                           height: frame.height)
+    //
+    //        }
+    //        else if selectorType == .underlineBar {
+    //             underlineBarFrame = CGRect(x: 0,
+    //                                           y: frame.height - bottomBarHeight,
+    //                                           width: selectorWidth,
+    //                                           height: bottomBarHeight)
+    //        }
+    //        else {
+    //            fatalError("Selectortype \(selectorType) unknown.")
+    //        }
+    //
+    //        if selectorView == nil {
+    //            selectorView = UIView(frame: underlineBarFrame!)
+    //        }
+    //        else {
+    //            selectorView?.frame = underlineBarFrame!
+    //        }
+    //
+    //        if isSelectorViewRounded == true {
+    //            selectorView!.layer.cornerRadius = frame.height / 2
+    //        }
+    //        else {
+    //            selectorView!.layer.cornerRadius = 0
+    //        }
+    //    }
+
+    private func setupSelectorView() {
+        _selectorView = UIView()
+
+        updateSelectorViewBackgroundColor()
+        updateSelectorViewFrame()
+    }
 
 
-    //MARK: - Action Methods
+    private func updateSelectorViewBackgroundColor() {
+        selectorView?.backgroundColor = backgroundColor
+    }
+
+    private func updateSelectorViewFrame() {
+
+    }
+
+    private func updateSelectorViewHeight() {
+        guard let selectorView = self.selectorView,
+            let segmentDescriptors = self.segmentDescriptors
+            else { return }
+
+        if selectorType == .background {
+            let newHeight = (frame.height) / CGFloat(segmentDescriptors.count)
+            selectorView.frame.size.height = newHeight
+        }
+        else if selectorType == .underlineBar {
+
+            moveSelectorView(toIndex: selectedSegmentIndex)
+        }
+
+        updateSelectorViewStyle()
+    }
+
+    private func updateSelectorViewStyle() {
+        guard let selectorView = self.selectorView
+            else { return }
+
+        var cornerRadius: CGFloat
+        switch selectorStyle {
+            case .round:
+                cornerRadius = selectorView.frame.height / 2
+            case .rounded:
+                cornerRadius = selectorCornerRadius
+            default:
+                cornerRadius = 0
+        }
+
+        selectorView.layer.cornerRadius = cornerRadius
+    }
+
+
+    private func moveSelectorView(toIndex index: Int) {
+        guard let selectorView = self.selectorView
+            else { return }
+
+        let buttonForIndex = segments[index]
+        guard let buttonOrigin = buttonForIndex.superview?.convert(buttonForIndex.frame.origin,
+                                                                   to: buttonForIndex.superview?.superview)
+            else { return }
+
+        let newOriginX = buttonOrigin.x
+        var newOriginY = buttonOrigin.y
+        let newWidth = buttonForIndex.frame.width
+        var newHeight = buttonForIndex.frame.height
+
+        if selectorType == .underlineBar {
+            newOriginY = newOriginY + buttonForIndex.frame.height - selectorView.frame.height
+            newHeight = underlineBarSelectorHeight
+        }
+
+        let newUnderlineBarFrame = CGRect(x: newOriginX,
+                                          y: newOriginY,
+                                          width: newWidth,
+                                          height: newHeight)
+
+        if animateSelectorMovement == true {
+            UIView.animate(withDuration: 0.25,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.selectorView!.frame = newUnderlineBarFrame
+
+            },
+                           completion: nil)
+        }
+        else {
+            selectorView.frame = newUnderlineBarFrame
+
+        }
+
+        selectorView.backgroundColor = underlineBarColor(forButtonAtIndex: index)
+    }
+
+}
+
+
+//MARK: - Extension - Action Methods
+extension SOXSegmentControl {
+
     @objc
     private func buttonTapped(_ sender: UIButton) {
         selectedSegmentIndex = sender.tag
 
         print("\(#function): selectedSegmentIndex: \(selectedSegmentIndex)")
-        for (index, button) in buttons.enumerated() {
+        for (index, button) in segments.enumerated() {
             button.tintColor = unSelectedTintColor(forButtonAtIndex: index)
             button.setTitleColor(unSelectedTextColor(forButtonAtIndex: index),
                                  for: .normal)
@@ -350,7 +524,7 @@ open class SOXSegmentControl: UIControl {
                                      for: .normal)
                 button.titleLabel?.font = unSelectedFont(forButtonAtIndex: index)
 
-                moveUnderlineBar(toIndex: index)
+                moveSelectorView(toIndex: index)
             }
         }
 
@@ -364,31 +538,33 @@ open class SOXSegmentControl: UIControl {
 extension SOXSegmentControl {
     private func segmentDescriptor(forIndex index: Int)
         -> SOXSegmentDescriptor? {
-            guard let segmentDescriptors = self.segmentDescriptors,
+            guard let segmentDescriptors = self.linearSegmentDescriptors,
                 segmentDescriptors.count >= index
                 else { return nil }
-
             let segmentDescriptor = segmentDescriptors[index]
             return segmentDescriptor
     }
 
-    private func buttonsCount()
-    -> Int {
-        var buttonsCount = 0
-        if let segmentDescriptors = self.segmentDescriptors {
-            buttonsCount = segmentDescriptors.count
-        }
-        else {
-            buttonsCount = buttonTitles.count
-        }
-
-        return buttonsCount
+    private func rowForSegmentDescriptor(_ segmentDescriptor: SOXSegmentDescriptor)
+        -> Int {
+            for (row, segmentDescriptorsOfRow) in segmentDescriptorsOfRows {
+                let titles = segmentDescriptorsOfRow.map { (segmentDesc) -> String in
+                    segmentDesc.buttonTitle!
+                }
+                print("segmentDescriptorsOfRow:\n \(titles)")
+                if segmentDescriptorsOfRow.contains(segmentDescriptor) {
+                    print("\(#function) \(row): count \(segmentDescriptorsOfRow.count)")
+                    return row
+                }
+            }
+            fatalError()
     }
+
 
     private func mappedButtonTitles()
         -> [String] {
             var buttonTitles: [String]
-            if let segmentDescriptors = self.segmentDescriptors {
+            if let segmentDescriptors = self.linearSegmentDescriptors {
                 buttonTitles = segmentDescriptors.map { (segmentDescriptor) -> String in
                     return segmentDescriptor.buttonTitle ?? ""
                 }
@@ -403,7 +579,7 @@ extension SOXSegmentControl {
     private func mappedButtonImageNames()
         -> [String] {
             var buttonImageNames: [String]
-            if let segmentDescriptors = self.segmentDescriptors {
+            if let segmentDescriptors = self.linearSegmentDescriptors {
                 buttonImageNames = segmentDescriptors.map { (segmentDescriptor) -> String in
                     return segmentDescriptor.buttonImageName ?? ""
                 }
@@ -415,29 +591,29 @@ extension SOXSegmentControl {
             return buttonImageNames
     }
 
-//    private func buttonTitle(forButtonAtIndex index: Int)
-//        -> String {
-//            guard let segmentDescriptor = self.segmentDescriptor(forIndex: index)
-//                else {
-//                    let buttonTitle = buttonTitles[index]
-//                    return buttonTitle
-//            }
-//
-//            let buttonTitle = segmentDescriptor.buttonTitle ?? ""
-//            return buttonTitle
-//    }
-//
-//    private func buttonImageName(forButtonAtIndex index: Int)
-//        -> String {
-//            guard let segmentDescriptor = self.segmentDescriptor(forIndex: index)
-//                else {
-//                    let buttonImageName = buttonImageNames[index]
-//                    return buttonImageName
-//            }
-//
-//            let buttonImageName = segmentDescriptor.buttonImageName ?? ""
-//            return buttonImageName
-//    }
+    //    private func buttonTitle(forButtonAtIndex index: Int)
+    //        -> String {
+    //            guard let segmentDescriptor = self.segmentDescriptor(forIndex: index)
+    //                else {
+    //                    let buttonTitle = buttonTitles[index]
+    //                    return buttonTitle
+    //            }
+    //
+    //            let buttonTitle = segmentDescriptor.buttonTitle ?? ""
+    //            return buttonTitle
+    //    }
+    //
+    //    private func buttonImageName(forButtonAtIndex index: Int)
+    //        -> String {
+    //            guard let segmentDescriptor = self.segmentDescriptor(forIndex: index)
+    //                else {
+    //                    let buttonImageName = buttonImageNames[index]
+    //                    return buttonImageName
+    //            }
+    //
+    //            let buttonImageName = segmentDescriptor.buttonImageName ?? ""
+    //            return buttonImageName
+    //    }
 
 
     private func selectedTextColor(forButtonAtIndex index: Int)
@@ -479,9 +655,9 @@ extension SOXSegmentControl {
     private func underlineBarColor(forButtonAtIndex index: Int)
         -> UIColor {
             guard let segmentDescriptor = self.segmentDescriptor(forIndex: index)
-                else { return underlineBarColor }
+                else { return selectorColor }
 
-            let underlineBarColor = segmentDescriptor.underlineBarColor
+            let underlineBarColor = segmentDescriptor.selectorColor
             return underlineBarColor
     }
 
@@ -507,17 +683,17 @@ extension SOXSegmentControl {
 //MARK: - Extension - UIButton
 extension UIButton {
     func centerImageAndButton(_ gap: CGFloat, imageOnTop: Bool) {
-        
+
         guard let imageView = currentImage,
             let titleLabel = titleLabel?.text
             else { return }
-        
+
         let sign: CGFloat = imageOnTop ? 1 : -1
         titleEdgeInsets = UIEdgeInsets(top: sign * (imageView.size.height + gap),
                                        left: -imageView.size.width,
                                        bottom: 0,
                                        right: 0);
-        
+
         let titleSize = titleLabel.size(withAttributes:
             [NSAttributedString.Key.font: self.titleLabel!.font!])
 
@@ -527,7 +703,7 @@ extension UIButton {
                                        bottom: 0,
                                        right: -titleSize.width - gap)
     }
-    
+
 }
 
 
