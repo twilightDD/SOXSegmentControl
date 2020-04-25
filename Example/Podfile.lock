@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SOXSegmentControl: d4288b230e64bf2bbd153e44372569df610db0fe
+  SOXSegmentControl: b595448cafd8bbbe58331a6ee07f7ea877c627cb
 
 PODFILE CHECKSUM: 97f030a757d7fed6895bfb6d6845f658d60bddcc
 

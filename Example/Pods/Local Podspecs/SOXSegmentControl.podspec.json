@@ -1,8 +1,8 @@
 {
   "name": "SOXSegmentControl",
   "version": "0.1.0",
-  "summary": "A short description of SOXSegmentControl.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "Just another replacement for segment controls. Main difference is the option for a multilined segments.",
+  "description": "As a lot of other cocoapods it allows to flexible configure you own segment control. \n  But in different you have the option to order you segments in a multilined pattern.",
   "homepage": "https://github.com/twilightDD/SOXSegmentControl",
   "license": {
     "type": "MIT",
@@ -16,7 +16,9 @@
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "13.0"
   },
-  "source_files": "SOXSegmentControl/Classes/**/*"
+  "swift_versions": "5.0",
+  "source_files": "SOXSegmentControl/Classes/**/*",
+  "swift_version": "5.0"
 }
