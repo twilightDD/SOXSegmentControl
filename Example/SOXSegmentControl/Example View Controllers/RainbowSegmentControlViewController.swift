@@ -39,27 +39,28 @@ extension RainbowSegmentControlViewController {
 
     private func setupSegmentControl() {
         segmentControl.backgroundColor = .clear
-        segmentControl.type = .imageOnTop
+        segmentControl.textPosition = .bottom
         segmentControl.selectorType = .underlineBar
 
-        let segments = [SOXSegmentDescriptor(buttonTitle: "A",
-                                             buttonImageName: "a.circle",
-                                             selectedColor: .systemPurple),
-                        SOXSegmentDescriptor(buttonTitle: "B",
-                                             buttonImageName: "b.circle",
-                                             selectedColor: .systemBlue),
-                        SOXSegmentDescriptor(buttonTitle: "C",
-                                             buttonImageName: "c.circle",
-                                             selectedColor: .systemGreen),
-                        SOXSegmentDescriptor(buttonTitle: "D",
-                                             buttonImageName: "d.circle",
-                                             selectedColor: .systemYellow),
-                        SOXSegmentDescriptor(buttonTitle: "E",
-                                             buttonImageName: "e.circle",
-                                             selectedColor: .systemRed)
-        ]
 
-        segmentControl.segmentDescriptors = [segments]
+        let segments = [SOXSegmentDescriptor(title: "A",
+                                             imageName: "a.circle",
+                                             color: .systemPurple),
+                        SOXSegmentDescriptor(title: "B",
+                                             imageName: "b.circle",
+                                             color: .systemBlue),
+                        SOXSegmentDescriptor(title: "C",
+                                             imageName: "c.circle",
+                                             color: .systemGreen),
+                        SOXSegmentDescriptor(title: "D",
+                                             imageName: "d.circle",
+                                             color: .systemYellow),
+                        SOXSegmentDescriptor(title: "E",
+                                             imageName: "e.circle",
+                                             color: .systemRed)
+        ]
+        
+        segmentControl.setSegmentDescriptors([segments])
     }
 
 }

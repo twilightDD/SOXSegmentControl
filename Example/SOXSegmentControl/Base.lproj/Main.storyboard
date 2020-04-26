@@ -76,7 +76,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="3dg-Fi-2V0" firstAttribute="top" secondItem="a40-Wy-Qab" secondAttribute="bottom" constant="17" id="4s9-Bb-upQ"/>
                             <constraint firstItem="190-hk-ArX" firstAttribute="top" secondItem="G97-Ak-HQd" secondAttribute="bottom" constant="8" id="7rD-V0-Z1Q"/>
@@ -269,7 +269,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Wx-MA-U5m" customClass="SOXSegmentControl">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Wx-MA-U5m" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
                                 <rect key="frame" x="16" y="65" width="343" height="200"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>

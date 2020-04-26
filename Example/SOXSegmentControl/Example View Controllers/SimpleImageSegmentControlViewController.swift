@@ -39,14 +39,14 @@ extension SimpleImageSegmentControlViewController {
 
     private func setupSegmentControl() {
         segmentControl.backgroundColor = .clear
-        segmentControl.type = .imageOnTop
+        segmentControl.textPosition = .bottom
         segmentControl.selectorType = .underlineBar
 
-        let segments = [SOXSegmentDescriptor(buttonImageName: "a.circle"),
-                        SOXSegmentDescriptor(buttonImageName: "b.circle"),
-                        SOXSegmentDescriptor(buttonImageName: "c.circle")]
-
-        segmentControl.segmentDescriptors = [segments]
+        let segments = [SOXSegmentDescriptor(imageName: "a.circle"),
+                        SOXSegmentDescriptor(imageName: "b.circle"),
+                        SOXSegmentDescriptor(imageName: "c.circle")]
+        
+        segmentControl.setSegmentDescriptors([segments])
     }
     
 }

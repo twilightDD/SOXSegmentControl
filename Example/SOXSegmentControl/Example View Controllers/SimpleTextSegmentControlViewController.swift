@@ -40,14 +40,14 @@ extension SimpleTextSegmentControlViewController {
 
     private func setupSegmentControl() {
         segmentControl.backgroundColor = .clear
-        segmentControl.type = .normal
+        segmentControl.textPosition = .bottom
         segmentControl.selectorType = .underlineBar
 
-        let segments = [SOXSegmentDescriptor(buttonTitle: "Segment A"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment B"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment C")]
+        let titles = ["Segment A",
+                      "Segment B",
+                      "Segment C"]
 
-        segmentControl.segmentDescriptors = [segments]
+        segmentControl.setTitles([titles])
     }
 
 }

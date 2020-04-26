@@ -38,34 +38,34 @@ extension ComplexSegmentControlViewController {
 
     private func setupSegmentControl() {
         segmentControl.backgroundColor = .clear
-        segmentControl.type = .imageOnTop
-        segmentControl.selectorType = .underlineBar
+        segmentControl.textPosition = .bottom
+        segmentControl.selectorType = .background
 
-        let segments = [SOXSegmentDescriptor(buttonTitle: "Segment A",
-                                             buttonImageName: "a.circle"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment B",
-                                             buttonImageName: "b.circle"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment C",
-                                             buttonImageName: "c.circle")]
+        let segments = [SOXSegmentDescriptor(title: "Segment A",
+                                             imageName: "a.circle"),
+                        SOXSegmentDescriptor(title: "Segment B",
+                                             imageName: "b.circle"),
+                        SOXSegmentDescriptor(title: "Segment C",
+                                             imageName: "c.circle")]
 
-        let segments2 = [SOXSegmentDescriptor(buttonTitle: "Segment D",
-                                             buttonImageName: "d.circle"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment E",
-                                             buttonImageName: "e.circle"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment F",
-                                             buttonImageName: "f.circle")]
+        let segments2 = [SOXSegmentDescriptor(title: "Segment D",
+                                              imageName: "d.circle"),
+                         SOXSegmentDescriptor(title: "Segment E",
+                                              imageName: "e.circle"),
+                         SOXSegmentDescriptor(title: "Segment F",
+                                              imageName: "f.circle")]
 
-        let segments3 = [SOXSegmentDescriptor(buttonTitle: "Segment G",
-                                              buttonImageName: "g.circle"),
-                         SOXSegmentDescriptor(buttonTitle: "Segment H",
-                                              buttonImageName: "h.circle"),
-                         SOXSegmentDescriptor(buttonTitle: "Segment I",
-                                              buttonImageName: "i.circle")]
+        let segments3 = [SOXSegmentDescriptor(title: "Segment G",
+                                              imageName: "g.circle"),
+                         SOXSegmentDescriptor(title: "Segment H",
+                                              imageName: "h.circle"),
+                         SOXSegmentDescriptor(title: "Segment I",
+                                              imageName: "i.circle")]
 
-
-        segmentControl.segmentDescriptors = [segments,
-                                             segments2,
-                                             segments3]
+        
+        segmentControl.setSegmentDescriptors([segments,
+                                              segments2,
+                                              segments3])
     }
 
 }

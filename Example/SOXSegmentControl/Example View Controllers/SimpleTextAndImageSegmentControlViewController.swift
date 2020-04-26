@@ -28,6 +28,7 @@ class SimpleTextAndImageSegmentControlViewController: UIViewController {
     //MARK: - Action Methods
 
     @IBAction func segmentControllAction(_ sender: SOXSegmentControl) {
+        print("Selected segment with index \(sender.selectedSegmentPath)")
         print("Selected segment with index \(sender.selectedSegmentIndex)")
     }
 
@@ -40,17 +41,17 @@ extension SimpleTextAndImageSegmentControlViewController {
 
     private func setupSegmentControl() {
         segmentControl.backgroundColor = .clear
-        segmentControl.type = .imageOnTop
+        segmentControl.textPosition = .bottom
         segmentControl.selectorType = .underlineBar
 
-        let segments = [SOXSegmentDescriptor(buttonTitle: "Segment A",
-                                             buttonImageName: "a.circle"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment B",
-                                             buttonImageName: "b.circle"),
-                        SOXSegmentDescriptor(buttonTitle: "Segment C",
-                                             buttonImageName: "c.circle")]
-
-        segmentControl.segmentDescriptors = [segments]
+        let segments = [SOXSegmentDescriptor(title: "Segment A",
+                                             imageName: "a.circle"),
+                        SOXSegmentDescriptor(title: "Segment B",
+                                             imageName: "b.circle"),
+                        SOXSegmentDescriptor(title: "Segment C",
+                                             imageName: "c.circle")]
+        
+        segmentControl.setSegmentDescriptors([segments])
     }
     
 }
