@@ -132,8 +132,8 @@ open class SOXSegmentControl: UIControl {
     private var selectorView: UIView = UIView()
     public var animateSelectorMovement: Bool = true
     public var selectorColor: UIColor = .lightGray
-    public var selectorStyle: SelectorStyle = .square
-    public var selectorType: SelectorType = .background { didSet { updateSelectorViewType() } }
+    public var selectorStyle: SelectorStyle = .square { didSet { updateSelectorViewFrame() } }
+    public var selectorType: SelectorType = .background { didSet { updateSelectorViewFrame() } }
     public var selectorCornerRadius: CGFloat = 5.0 { didSet { updateSelectorViewStyle() } }
     public var underlineBarSelectorHeight : CGFloat = 5.0  { didSet { updateSelectorViewHeight() } }
 
@@ -395,6 +395,7 @@ private extension SOXSegmentControl {
         let newSelectorRow = selectedSegmentPath.row
         let newSelectorColumn = selectedSegmentPath.column
 
+        // Frame
         let segmentWidth = frame.width / CGFloat(segmentDescriptors[newSelectorRow].count)
         let segmentHeight = frame.height / CGFloat(segmentDescriptors.count)
         let segmentOriginX = CGFloat(newSelectorColumn) * segmentWidth
@@ -405,6 +406,7 @@ private extension SOXSegmentControl {
         let newSelectorWidth: CGFloat = segmentWidth
         var newSelectorHeight: CGFloat = 0
 
+        // Selector Type
         switch self.selectorType {
             case .none:
                 break
@@ -415,6 +417,19 @@ private extension SOXSegmentControl {
                 newSelectorHeight = underlineBarSelectorHeight
         }
 
+        // Selector Style
+        var selectorViewCornerRadius: CGFloat = 0
+        switch selectorStyle {
+            case .square:
+                break
+            case .round:
+                selectorViewCornerRadius = selectorView.frame.height / 2
+            case .rounded:
+                selectorViewCornerRadius = selectorCornerRadius
+        }
+
+
+        // Update Selector View Frame
         let newUnderlineBarFrame = CGRect(x: newSelectorOriginX,
                                           y: newSelectorOriginY,
                                           width: newSelectorWidth,
@@ -432,7 +447,9 @@ private extension SOXSegmentControl {
                         //                            fromSegment.isSelected = false
                         //                            toSegment.isSelected = true
                         self.selectorView.frame = newUnderlineBarFrame
-                        self.selectorView.backgroundColor = self.selectorColor(forIndexPath: self.selectedSegmentPath) },
+                        self.selectorView.backgroundColor = self.selectorColor(forIndexPath: self.selectedSegmentPath)
+                        self.selectorView.layer.cornerRadius = selectorViewCornerRadius
+            },
                        completion: nil)
     }
 
@@ -467,51 +484,64 @@ private extension SOXSegmentControl {
         selectorView.layer.cornerRadius = cornerRadius
     }
 
-    private func moveSelectorView(toIndexPath indexPath: SOXIndexPath) {
-        let toSegment = segment(forIndexPath: indexPath)
-
-        // move SelectorView
-        guard let buttonOrigin = toSegment.superview?.convert(toSegment.frame.origin,
-                                                              to: toSegment.superview?.superview)
-            else { fatalError() }
-
-        let newOriginX = buttonOrigin.x
-        var newOriginY = buttonOrigin.y
-        let newWidth = toSegment.frame.width
-        var newHeight = toSegment.frame.height
-
-        if selectorType == .underlineBar {
-            newOriginY = newOriginY + toSegment.frame.height - selectorView.frame.height
-            newHeight = underlineBarSelectorHeight
-        }
-
-        let newUnderlineBarFrame = CGRect(x: newOriginX,
-                                          y: newOriginY,
-                                          width: newWidth,
-                                          height: newHeight)
-
-        var animationDuration: TimeInterval = 0
-        if animateSelectorMovement == true {
-            animationDuration = 0.25
-        }
-
-        UIView.animate(withDuration: animationDuration,
-                       delay: 0,
-                       options: .curveEaseOut,
-                       animations: { [unowned self] in
-                        self.selectorView.frame = newUnderlineBarFrame
-                        self.selectorView.backgroundColor = self.selectorColor(forIndexPath: indexPath) },
-                       completion: nil)
-    }
-
-    private func moveSelectorView(from fromIndexPath: SOXIndexPath,
-                     to toIndexPath: SOXIndexPath) {
-        if fromIndexPath == toIndexPath {
-            return
-        }
-        moveSelectorView(toIndexPath: toIndexPath)
-
-    }
+//    private func moveSelectorView(toIndexPath indexPath: SOXIndexPath) {
+//        let toSegment = segment(forIndexPath: indexPath)
+//
+//        // move SelectorView
+//        guard let buttonOrigin = toSegment.superview?.convert(toSegment.frame.origin,
+//                                                              to: toSegment.superview?.superview)
+//            else { fatalError() }
+//
+//        let newOriginX = buttonOrigin.x
+//        var newOriginY = buttonOrigin.y
+//        let newWidth = toSegment.frame.width
+//        var newHeight = toSegment.frame.height
+//
+//        // Selector Type
+//        if selectorType == .underlineBar {
+//            newOriginY = newOriginY + toSegment.frame.height - selectorView.frame.height
+//            newHeight = underlineBarSelectorHeight
+//        }
+//
+//        // Selector Style
+//        switch selectorStyle {
+//            case .round:
+//                cornerRadius = selectorView.frame.height / 2
+//            case .rounded:
+//                cornerRadius = selectorCornerRadius
+//            default:
+//                cornerRadius = 0
+//        }
+//
+//        selectorView.layer.cornerRadius = cornerRadius
+//
+//        let newUnderlineBarFrame = CGRect(x: newOriginX,
+//                                          y: newOriginY,
+//                                          width: newWidth,
+//                                          height: newHeight)
+//
+//        var animationDuration: TimeInterval = 0
+//        if animateSelectorMovement == true {
+//            animationDuration = 0.25
+//        }
+//
+//        UIView.animate(withDuration: animationDuration,
+//                       delay: 0,
+//                       options: .curveEaseOut,
+//                       animations: { [unowned self] in
+//                        self.selectorView.frame = newUnderlineBarFrame
+//                        self.selectorView.backgroundColor = self.selectorColor(forIndexPath: indexPath) },
+//                       completion: nil)
+//    }
+//
+//    private func moveSelectorView(from fromIndexPath: SOXIndexPath,
+//                     to toIndexPath: SOXIndexPath) {
+//        if fromIndexPath == toIndexPath {
+//            return
+//        }
+//        moveSelectorView(toIndexPath: toIndexPath)
+//
+//    }
 
 }
 

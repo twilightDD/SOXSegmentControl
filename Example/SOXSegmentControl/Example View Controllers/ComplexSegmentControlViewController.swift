@@ -19,6 +19,7 @@ class ComplexSegmentControlViewController: UIViewController {
 
     // Setting SegmentControls
     @IBOutlet weak var selectorTypeSegmentControl: SOXSegmentControl!
+    @IBOutlet weak var selectorStyleSegmentControl: SOXSegmentControl!
 
 
     //MARK: - Init&Co.
@@ -38,6 +39,11 @@ class ComplexSegmentControlViewController: UIViewController {
         if sender == selectorTypeSegmentControl {
             if let selectorType = SOXSegmentControl.SelectorType.init(rawValue: selectedSegmentIndex) {
                 segmentControl.selectorType = selectorType
+            }
+        }
+        else if sender == selectorStyleSegmentControl {
+            if let selectorStyle = SOXSegmentControl.SelectorStyle.init(rawValue: selectedSegmentIndex) {
+                segmentControl.selectorStyle = selectorStyle
             }
         }
     }
@@ -93,8 +99,17 @@ extension ComplexSegmentControlViewController {
 
 extension ComplexSegmentControlViewController {
     private func setupSettingsSegmentControls() {
+        // selectorType
         selectorTypeSegmentControl.selectorType = .underlineBar
         selectorTypeSegmentControl.setTitles([["none", "background", "underline"]])
         selectorTypeSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 2)
+
+        // selectorStyle
+        selectorStyleSegmentControl.selectorStyle = .square
+        selectorStyleSegmentControl.setTitles([["square", "round", "rounded"]])
+        selectorStyleSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 0)
+
+
+
     }
 }
