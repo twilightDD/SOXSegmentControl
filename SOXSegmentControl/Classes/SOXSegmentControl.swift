@@ -329,7 +329,7 @@ public extension SOXSegmentControl {
 
         updateSegments()
         updateView()
-        //moveSelectorView(toIndexPath: selectedSegmentPath)
+        updateSegment(atIndexPath: selectedSegmentPath, isSelected: true)
     }
 
     func setTitles(_ titles: [[String]]) {
@@ -351,7 +351,9 @@ public extension SOXSegmentControl {
 
 private extension SOXSegmentControl {
     private func updateSegment(atIndexPath indexPath: SOXIndexPath, isSelected: Bool) {
-        let segmentToUpdate = segment(forIndexPath: indexPath)
+
+        guard let segmentToUpdate = segment(forIndexPath: indexPath)
+            else { return }
 
         if isSelected == true {
             segmentToUpdate.tintColor = selectedTintColor(forIndexPath: indexPath)
@@ -368,10 +370,16 @@ private extension SOXSegmentControl {
 
 
     private func segment(forIndexPath indexPath: SOXIndexPath)
-        -> SOXSegment {
-            let segmentsForRow = segments[indexPath.row]
-            let segment = segmentsForRow[indexPath.column]
-            return segment
+        -> SOXSegment? {
+            if segments.count > indexPath.row {
+                let segmentsForRow = segments[indexPath.row]
+                if segmentsForRow.count > indexPath.column {
+                    let segment = segmentsForRow[indexPath.column]
+                    return segment
+                }
+            }
+
+            return nil
     }
 }
 
@@ -456,6 +464,7 @@ private extension SOXSegmentControl {
     private func updateTextPosition() {
         updateSegments()
         updateView()
+        updateSegment(atIndexPath: selectedSegmentPath, isSelected: true)
     }
 
     private func updateSelectorViewHeight() {
