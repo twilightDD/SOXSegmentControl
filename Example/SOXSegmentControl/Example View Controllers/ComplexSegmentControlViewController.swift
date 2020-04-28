@@ -17,17 +17,29 @@ class ComplexSegmentControlViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet private weak var segmentControl: SOXSegmentControl!
 
+    // Setting SegmentControls
+    @IBOutlet weak var selectorTypeSegmentControl: SOXSegmentControl!
+
+
     //MARK: - Init&Co.
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupSegmentControl()
+
+        setupSettingsSegmentControls()
     }
 
     //MARK: - Action Methods
 
     @IBAction func segmentControllAction(_ sender: SOXSegmentControl) {
         print("Selected segment with index \(sender.selectedSegmentIndex)")
+        let selectedSegmentIndex = sender.selectedSegmentIndex
+        if sender == selectorTypeSegmentControl {
+            if let selectorType = SOXSegmentControl.SelectorType.init(rawValue: selectedSegmentIndex) {
+                segmentControl.selectorType = selectorType
+            }
+        }
     }
 
 }
@@ -38,8 +50,16 @@ extension ComplexSegmentControlViewController {
 
     private func setupSegmentControl() {
         segmentControl.backgroundColor = .clear
+
         segmentControl.textPosition = .bottom
-        segmentControl.selectorType = .background
+
+        segmentControl.selectorColor = .lightGray
+
+        segmentControl.selectedTextColor = .label
+        segmentControl.unSelectedTextColor = .darkGray
+        segmentControl.selectorType = .underlineBar
+
+
 
         let segments = [SOXSegmentDescriptor(title: "Segment A",
                                              imageName: "a.circle"),
@@ -68,4 +88,13 @@ extension ComplexSegmentControlViewController {
                                               segments3])
     }
 
+}
+
+
+extension ComplexSegmentControlViewController {
+    private func setupSettingsSegmentControls() {
+        selectorTypeSegmentControl.selectorType = .underlineBar
+        selectorTypeSegmentControl.setTitles([["none", "background", "underline"]])
+        selectorTypeSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 2)
+    }
 }

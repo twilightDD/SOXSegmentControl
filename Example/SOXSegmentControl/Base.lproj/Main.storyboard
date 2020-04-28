@@ -282,11 +282,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbL-P1-A2C">
-                                <rect key="frame" x="308" y="273" width="51" height="31"/>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDI-SP-JPy">
-                                <rect key="frame" x="20" y="278" width="280" height="21"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YS1-2Z-dMO" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
+                                <rect key="frame" x="123" y="273" width="236" height="25"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="ImE-JS-O0v"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="XbE-9g-rKa"/>
+                                </connections>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="selectorType" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDI-SP-JPy">
+                                <rect key="frame" x="16" y="275" width="98.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -294,23 +301,24 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="gbL-P1-A2C" firstAttribute="top" secondItem="5Wx-MA-U5m" secondAttribute="bottom" constant="8" id="5fW-9Z-yho"/>
-                            <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="gbL-P1-A2C" secondAttribute="trailing" constant="18" id="PVu-gJ-U4m"/>
+                            <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="YS1-2Z-dMO" secondAttribute="trailing" constant="16" id="P4d-4X-DwD"/>
                             <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="bJa-QJ-zV1" secondAttribute="trailing" constant="166.5" id="QVn-4X-kPT"/>
+                            <constraint firstItem="YS1-2Z-dMO" firstAttribute="top" secondItem="5Wx-MA-U5m" secondAttribute="bottom" constant="8" id="UTc-rB-fbL"/>
                             <constraint firstItem="5Wx-MA-U5m" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="Uiq-G1-7SX"/>
+                            <constraint firstItem="YS1-2Z-dMO" firstAttribute="leading" secondItem="XDI-SP-JPy" secondAttribute="trailing" constant="4.5" id="Vec-ln-1gb"/>
                             <constraint firstItem="5Wx-MA-U5m" firstAttribute="top" secondItem="bJa-QJ-zV1" secondAttribute="bottom" constant="24" id="WZs-GV-FjC"/>
+                            <constraint firstItem="XDI-SP-JPy" firstAttribute="centerY" secondItem="YS1-2Z-dMO" secondAttribute="centerY" id="aBq-ub-2Ap"/>
                             <constraint firstItem="bJa-QJ-zV1" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="b3x-q0-Xgv"/>
                             <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="5Wx-MA-U5m" secondAttribute="trailing" constant="16" id="gg8-Ev-SCV"/>
                             <constraint firstItem="bJa-QJ-zV1" firstAttribute="top" secondItem="mOc-rP-qvT" secondAttribute="top" constant="20" id="hHb-oD-lnt"/>
                             <constraint firstItem="XDI-SP-JPy" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="20" id="iy7-QS-iTz"/>
-                            <constraint firstItem="XDI-SP-JPy" firstAttribute="centerY" secondItem="gbL-P1-A2C" secondAttribute="centerY" id="ouw-nv-Lxw"/>
-                            <constraint firstItem="gbL-P1-A2C" firstAttribute="leading" secondItem="XDI-SP-JPy" secondAttribute="trailing" constant="8" id="r5o-sw-3D1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mOc-rP-qvT"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Complex" id="eUp-Mc-6QJ"/>
                     <connections>
                         <outlet property="segmentControl" destination="5Wx-MA-U5m" id="r70-4S-0vI"/>
+                        <outlet property="selectorTypeSegmentControl" destination="YS1-2Z-dMO" id="2Zo-zA-IIs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AJN-XR-emm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

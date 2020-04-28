@@ -133,7 +133,7 @@ open class SOXSegmentControl: UIControl {
     public var animateSelectorMovement: Bool = true
     public var selectorColor: UIColor = .lightGray
     public var selectorStyle: SelectorStyle = .square
-    public var selectorType: SelectorType = .background
+    public var selectorType: SelectorType = .background { didSet { updateSelectorViewType() } }
     public var selectorCornerRadius: CGFloat = 5.0 { didSet { updateSelectorViewStyle() } }
     public var underlineBarSelectorHeight : CGFloat = 5.0  { didSet { updateSelectorViewHeight() } }
 
@@ -163,14 +163,14 @@ open class SOXSegmentControl: UIControl {
     var borderColor: UIColor = .clear { didSet { layer.borderColor = borderColor.cgColor } }
     var cornerRadius: CGFloat = 0 { didSet { layer.cornerRadius = cornerRadius } }
 
-    var selectedTextColor: UIColor = .label { didSet { updateView() } }
-    var selectedTintColor: UIColor = .label { didSet { updateView() } }
-    var unSelectedTextColor: UIColor = .lightGray { didSet { updateView() } }
-    var unSelectedTintColor: UIColor = .lightGray { didSet { updateView() } }
+    public var selectedTextColor: UIColor = .label { didSet { updateView() } }
+    public var selectedTintColor: UIColor = .label { didSet { updateView() } }
+    public var unSelectedTextColor: UIColor = .lightGray { didSet { updateView() } }
+    public var unSelectedTintColor: UIColor = .lightGray { didSet { updateView() } }
 
 
-    var selectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
-    var unSelectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
+    public var selectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
+    public var unSelectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
 
 
 
@@ -378,7 +378,7 @@ private extension SOXSegmentControl {
 //MARK: - Extension - Background Selector View
 private extension SOXSegmentControl {
     private func updateSelectorView() {
-
+        updateSelectorViewFrame()
     }
 
     private func updateSelectorViewBackgroundColor() {
@@ -447,6 +447,10 @@ private extension SOXSegmentControl {
 //        }
 //
 //        updateSelectorViewStyle()
+    }
+
+    private func updateSelectorViewType() {
+        updateSelectorView()
     }
 
     private func updateSelectorViewStyle() {
