@@ -14,105 +14,76 @@ import Foundation
 import UIKit
 
 
-//MARK: - SOXIndexPath
-public struct SOXIndexPath: Equatable {
-    var row: Int = 0
-    var column: Int = 0
-
-    public init(row: Int, column: Int) {
-        self.row = row
-        self.column = column
-    }
-}
-
-//MARK: -
-//MARK: - SOXSegmentDescriptor
-public struct SOXSegmentDescriptor: Equatable {
-    public var title: String?
-    public var imageName: String?
-
-    public var selectedTextColor: UIColor?
-    public var selectedTintColor: UIColor?
-    public var unSelectedTextColor: UIColor?
-    public var unSelectedTintColor: UIColor?
-    public var selectorColor: UIColor?
-
-    public var selectedFont : UIFont?
-    public var unSelectedFont : UIFont?
-
-    public var textPosition: SOXSegmentControl.TextPosition?
-    public var selectorType: SOXSegmentControl.SelectorType?
-    public var selectorStyle: SOXSegmentControl.SelectorStyle?
-
-    // In case of doublets we need a distinctive marker; 220420, ph
-    private let uuid = UUID()
-
-    public static func == (lhs: SOXSegmentDescriptor, rhs: SOXSegmentDescriptor)
-        -> Bool {
-            return lhs.uuid == rhs.uuid
-    }
-
-
-    public init(title: String? = nil,
-                selectedTitleColor: UIColor? = nil,
-                unSelectedTitleColor: UIColor? = nil,
-                selectedFont : UIFont? = nil,
-                unSelectedFont : UIFont? = nil,
-
-                imageName: String? = nil,
-                selectedImageColor: UIColor? = nil,
-                unSelectedImageColor: UIColor? = nil,
-
-                segmentType: SOXSegmentControl.TextPosition? = nil,
-
-                selectorColor: UIColor? = nil,
-                selectorType: SOXSegmentControl.SelectorType? = nil,
-                selectorStyle: SOXSegmentControl.SelectorStyle? = nil) {
-    }
-
-
-    public init(title: String? = nil,
-                imageName: String? = nil,
-                color: UIColor? = nil,
-                selectedColor: UIColor? = nil,
-                unSelectedColor: UIColor? = nil,
-                selectorColor: UIColor? = nil,
-                selectorType:  SOXSegmentControl.SelectorType? = nil) {
-
-        self.title = title
-        self.imageName = imageName
-
-        self.selectorType = selectorType
-
-        if let allColors = color {
-            self.selectedTextColor = allColors
-            self.selectedTintColor = allColors
-            self.selectorColor = allColors
-            self.unSelectedTextColor = allColors
-            self.unSelectedTintColor = allColors
-        }
-        else {
-            self.selectedTextColor = selectedColor
-            self.selectedTintColor = selectedColor
-            self.selectorColor = selectorColor
-
-            self.unSelectedTextColor = unSelectedColor
-            self.unSelectedTintColor = unSelectedColor
-        }
-
-    }
-}
-
-//MARK: -
-//MARK: - SOXSegmentControl
+//MARK: - SOXSegmentControl - Class with Properties
 open class SOXSegmentControl: UIControl {
+    //MARK: Public Properties
+    private var selectorView: UIView = UIView()
 
-    //MARK: Enums
-    //TODO: text/imagePosition?
-    public enum TextPosition: Int {
-        case none
-        case right
-        case bottom
+    public var selectorColor: UIColor = .lightGray { didSet { selectorView.backgroundColor = selectorColor } }
+    public var selectorCornerRadius: CGFloat = 5.0 { didSet { updateSelectorViewStyle() } }
+    public var selectorMovementAnimated: Bool = true
+    public var selectorStyle: SelectorStyle = .square { didSet { updateSelectorViewFrame() } }
+    public var selectorType: SelectorType = .background { didSet { updateSelectorViewFrame() } }
+    public var underlineBarSelectorHeight : CGFloat = 5.0  { didSet { updateSelectorViewHeight() } }
+
+
+    public var selectedSegmentPath: SOXIndexPath = SOXIndexPath.init(row: 0, column: 0) {
+        didSet {
+            //TODO: TODO update selectedSegmentIndex
+            let newValue = selectedSegmentPath
+            updateSegment(atIndexPath: oldValue, isSelected: false)
+            updateSegment(atIndexPath: newValue, isSelected: true)
+            updateSelectorViewFrame()
+        } }
+    public var selectedSegmentIndex: Int = 0
+
+     //MARK: Segment Properties
+    public var textPosition: SOXSegmentControl.TextPosition = .right { didSet { updateTextPosition() } }
+
+
+
+    //MARK: Border Settings
+    public var borderColor: UIColor = .clear { didSet { layer.borderColor = borderColor.cgColor } }
+    public var borderCornerRadius: CGFloat = 0 { didSet { layer.cornerRadius = borderCornerRadius } }
+    public var borderWidth: CGFloat = 0 { didSet { layer.borderWidth = borderWidth } }
+
+    //MARK: Appereance of Selected and Unselected Segments
+    public var selectedTextColor: UIColor = .label { didSet { updateView() } }
+    public var selectedTintColor: UIColor = .label { didSet { updateView() } }
+    public var selectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
+    public var unSelectedTextColor: UIColor = .lightGray { didSet { updateView() } }
+    public var unSelectedTintColor: UIColor = .lightGray { didSet { updateView() } }
+    public var unSelectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
+
+    //MARK: - Call Back
+    //TODO: TODO needs to be reworked; 280420, ph
+    var onValueChanged: ((_ index: Int)->())?
+
+    //MARK: - Private Properties
+    private var segmentDescriptors: [[SOXSegmentDescriptor]] = [[SOXSegmentDescriptor]]()
+    private var linearSegmentDescriptors = [SOXSegmentDescriptor]()
+    private var segments = [[SOXSegment]]()
+
+
+    //MARK: - Override UIView Methods
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if segmentDescriptors.count > 0 {
+            updateSelectorViewFrame()
+        }
+    }
+
+}
+
+
+//MARK: - SOXSegmentControl - Enums
+extension SOXSegmentControl {
+
+    public enum SelectorStyle: Int {
+        case square
+        case round
+        case rounded // set selectorCornerRadius
     }
 
     public enum SelectorType: Int {
@@ -121,94 +92,52 @@ open class SOXSegmentControl: UIControl {
         case underlineBar
     }
 
-    public enum SelectorStyle: Int {
-        case square
-        case round
-        case rounded // set selectorCornerRadius
+    public enum TextPosition: Int {
+        case none
+        case right
+        case bottom
+        //TODO: TODO add text/imagePosition?
     }
 
-    //MARK: - Lets and Vars
-    //MARK: Selector Background Properties
-    private var selectorView: UIView = UIView()
-    public var selectorMovementAnimated: Bool = true
-    public var selectorColor: UIColor = .lightGray
-    public var selectorStyle: SelectorStyle = .square { didSet { updateSelectorViewFrame() } }
-    public var selectorType: SelectorType = .background { didSet { updateSelectorViewFrame() } }
-    public var selectorCornerRadius: CGFloat = 5.0 { didSet { updateSelectorViewStyle() } }
-    public var underlineBarSelectorHeight : CGFloat = 5.0  { didSet { updateSelectorViewHeight() } }
+}
 
 
-    var onValueChanged: ((_ index: Int)->())?
-    public var selectedSegmentPath: SOXIndexPath = SOXIndexPath.init(row: 0, column: 0) {
-        didSet {
-            //TODO: update selectedSegmentIndex
-            let newValue = selectedSegmentPath
-            updateSegment(atIndexPath: oldValue, isSelected: false)
-            updateSegment(atIndexPath: newValue, isSelected: true)
-            updateSelectorViewFrame()
-        } }
-    public var selectedSegmentIndex: Int = 0
+//MARK: - Public Methods
+public extension SOXSegmentControl {
+    func setSegmentDescriptors(_ newSegmentDescriptors: [[SOXSegmentDescriptor]]) {
+        segmentDescriptors = newSegmentDescriptors
+        updateLinearSegmentDescriptors()
 
-    public var textPosition: SOXSegmentControl.TextPosition = .right { didSet { updateTextPosition() } }
+        updateSegments()
+        updateView()
+        updateSegment(atIndexPath: selectedSegmentPath, isSelected: true)
+    }
 
-    private var segmentDescriptors: [[SOXSegmentDescriptor]] = [[SOXSegmentDescriptor]]()
-    private var linearSegmentDescriptors = [SOXSegmentDescriptor]()
+    func setTitles(_ titles: [[String]]) {
+        var newSegmentDescriptors = [[SOXSegmentDescriptor]]()
 
-
-
-    // UI
-
-
-    var borderWidth: CGFloat = 0 { didSet { layer.borderWidth = borderWidth } }
-    var borderColor: UIColor = .clear { didSet { layer.borderColor = borderColor.cgColor } }
-    var cornerRadius: CGFloat = 0 { didSet { layer.cornerRadius = cornerRadius } }
-
-    public var selectedTextColor: UIColor = .label { didSet { updateView() } }
-    public var selectedTintColor: UIColor = .label { didSet { updateView() } }
-    public var unSelectedTextColor: UIColor = .lightGray { didSet { updateView() } }
-    public var unSelectedTintColor: UIColor = .lightGray { didSet { updateView() } }
-
-
-    public var selectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
-    public var unSelectedFont : UIFont = UIFont.systemFont(ofSize: 15) { didSet { updateView() } }
-
-
-
-    //MARK: - Private Properties
-    private var segments = [[SOXSegment]]()
-    private var segmentToRow = [SOXSegment : Int]()
-    private var segmentCount: Int = 0
-
-
-    //MARK: - Open Methods
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-
-        //updateView()
-        if segmentDescriptors.count > 0 {
-            updateSelectorViewFrame()
+        for rowTitles in titles {
+            var newSegmentDescriptorsForRow = [SOXSegmentDescriptor]()
+            for title in rowTitles {
+                let segmentDescriptor = SOXSegmentDescriptor(title: title)
+                newSegmentDescriptorsForRow.append(segmentDescriptor)
+            }
+            newSegmentDescriptors.append(newSegmentDescriptorsForRow)
         }
+
+        setSegmentDescriptors(newSegmentDescriptors)
     }
 
-    open func changeSelectorColor(_ color: UIColor) {
-        selectorView.backgroundColor = color
-    }
-
-    //MARK: - Private Methods
-    private func updateLinearSegmentDescriptors() {
-        linearSegmentDescriptors = [SOXSegmentDescriptor]()
-        for segmentDescriptorsForRow in segmentDescriptors {
-            linearSegmentDescriptors.append(contentsOf: segmentDescriptorsForRow)
-        }
-    }
+}
 
 
-
+//MARK: - Private Methods
+extension SOXSegmentControl {
     private func updateView() {
         if segmentDescriptors.count == 0 {
             return
         }
-        
+
         clipsToBounds = true
 
         subviews.forEach( { $0.removeFromSuperview() } )
@@ -216,6 +145,14 @@ open class SOXSegmentControl: UIControl {
 
         addSubview(selectorView)
         arrangeSegments()
+    }
+
+    //MARK: - Segment Handling
+    private func updateLinearSegmentDescriptors() {
+        linearSegmentDescriptors = [SOXSegmentDescriptor]()
+        for segmentDescriptorsForRow in segmentDescriptors {
+            linearSegmentDescriptors.append(contentsOf: segmentDescriptorsForRow)
+        }
     }
 
     private func arrangeSegments() {
@@ -319,37 +256,7 @@ open class SOXSegmentControl: UIControl {
             return nil
     }
 
-}
 
-//MARK: - Public Methods
-public extension SOXSegmentControl {
-    func setSegmentDescriptors(_ newSegmentDescriptors: [[SOXSegmentDescriptor]]) {
-        segmentDescriptors = newSegmentDescriptors
-        updateLinearSegmentDescriptors()
-
-        updateSegments()
-        updateView()
-        updateSegment(atIndexPath: selectedSegmentPath, isSelected: true)
-    }
-
-    func setTitles(_ titles: [[String]]) {
-        var newSegmentDescriptors = [[SOXSegmentDescriptor]]()
-
-        for rowTitles in titles {
-            var newSegmentDescriptorsForRow = [SOXSegmentDescriptor]()
-            for title in rowTitles {
-                let segmentDescriptor = SOXSegmentDescriptor(title: title)
-                newSegmentDescriptorsForRow.append(segmentDescriptor)
-            }
-            newSegmentDescriptors.append(newSegmentDescriptorsForRow)
-        }
-
-        setSegmentDescriptors(newSegmentDescriptors)
-    }
-
-}
-
-private extension SOXSegmentControl {
     private func updateSegment(atIndexPath indexPath: SOXIndexPath, isSelected: Bool) {
 
         guard let segmentToUpdate = segment(forIndexPath: indexPath)
@@ -381,10 +288,10 @@ private extension SOXSegmentControl {
 
             return nil
     }
-}
 
-//MARK: - Extension - Background Selector View
-private extension SOXSegmentControl {
+
+    //MARK: - SelectorView Handling
+
     private func updateSelectorView() {
         updateSelectorViewFrame()
     }
@@ -498,86 +405,10 @@ private extension SOXSegmentControl {
         selectorView.layer.cornerRadius = cornerRadius
     }
 
-//    private func moveSelectorView(toIndexPath indexPath: SOXIndexPath) {
-//        let toSegment = segment(forIndexPath: indexPath)
-//
-//        // move SelectorView
-//        guard let buttonOrigin = toSegment.superview?.convert(toSegment.frame.origin,
-//                                                              to: toSegment.superview?.superview)
-//            else { fatalError() }
-//
-//        let newOriginX = buttonOrigin.x
-//        var newOriginY = buttonOrigin.y
-//        let newWidth = toSegment.frame.width
-//        var newHeight = toSegment.frame.height
-//
-//        // Selector Type
-//        if selectorType == .underlineBar {
-//            newOriginY = newOriginY + toSegment.frame.height - selectorView.frame.height
-//            newHeight = underlineBarSelectorHeight
-//        }
-//
-//        // Selector Style
-//        switch selectorStyle {
-//            case .round:
-//                cornerRadius = selectorView.frame.height / 2
-//            case .rounded:
-//                cornerRadius = selectorCornerRadius
-//            default:
-//                cornerRadius = 0
-//        }
-//
-//        selectorView.layer.cornerRadius = cornerRadius
-//
-//        let newUnderlineBarFrame = CGRect(x: newOriginX,
-//                                          y: newOriginY,
-//                                          width: newWidth,
-//                                          height: newHeight)
-//
-//        var animationDuration: TimeInterval = 0
-//        if animateSelectorMovement == true {
-//            animationDuration = 0.25
-//        }
-//
-//        UIView.animate(withDuration: animationDuration,
-//                       delay: 0,
-//                       options: .curveEaseOut,
-//                       animations: { [unowned self] in
-//                        self.selectorView.frame = newUnderlineBarFrame
-//                        self.selectorView.backgroundColor = self.selectorColor(forIndexPath: indexPath) },
-//                       completion: nil)
-//    }
-//
-//    private func moveSelectorView(from fromIndexPath: SOXIndexPath,
-//                     to toIndexPath: SOXIndexPath) {
-//        if fromIndexPath == toIndexPath {
-//            return
-//        }
-//        moveSelectorView(toIndexPath: toIndexPath)
-//
-//    }
-
-}
 
 
-//MARK: - Extension - Action Methods
-extension SOXSegmentControl {
+//MARK: - SegmentDesciptor handling
 
-    @objc
-    private func buttonTapped(_ sender: SOXSegment) {
-
-        selectedSegmentIndex = sender.tag //TODO: remove if didSet selectedSegmentPath changes ~Index
-        selectedSegmentPath = sender.indexPath
-        print("\(#function): selectedSegmentIndex: \(selectedSegmentIndex)")
-
-        onValueChanged?(selectedSegmentIndex)
-        sendActions(for: .valueChanged)
-    }
-
-}
-
-//MARK: - Extension - SegmentDesciptor handling
-extension SOXSegmentControl {
     private func segmentDescriptor(forIndex index: Int)
         -> SOXSegmentDescriptor? {
             guard linearSegmentDescriptors.count >= index
@@ -704,11 +535,32 @@ extension SOXSegmentControl {
 
 }
 
+//MARK: - Action Methods
+extension SOXSegmentControl {
+
+    @objc
+    private func buttonTapped(_ sender: SOXSegment) {
+
+        selectedSegmentIndex = sender.tag //TODO: TODO remove if didSet selectedSegmentPath changes ~Index
+        selectedSegmentPath = sender.indexPath
+        print("\(#function): selectedSegmentIndex: \(selectedSegmentIndex)")
+
+        onValueChanged?(selectedSegmentIndex)
+        sendActions(for: .valueChanged)
+    }
+
+}
+
+
+//MARK: -
 //MARK: - SOXButton
 open class SOXSegment: UIButton {
+
+    //MARK: Properties
     var indexPath: SOXIndexPath
     var segmentDescriptor: SOXSegmentDescriptor
 
+    //MARK: Init Methods
     required public init(indexPath: SOXIndexPath, segmentDescriptor: SOXSegmentDescriptor) {
         self.indexPath = indexPath
         self.segmentDescriptor = segmentDescriptor
@@ -718,11 +570,10 @@ open class SOXSegment: UIButton {
 
     required public init?(coder: NSCoder) {
         fatalError()
-        self.indexPath = SOXIndexPath(row: 0, column: 0)
-        super.init(coder: coder)
     }
 
-    func centerImageAndButton(_ gap: CGFloat, imageOnTop: Bool) {
+    //MARK: Instance Methods
+    fileprivate func centerImageAndButton(_ gap: CGFloat, imageOnTop: Bool) {
 
         guard let imageView = currentImage,
             let titleLabel = titleLabel?.text
@@ -737,7 +588,7 @@ open class SOXSegment: UIButton {
         let titleSize = titleLabel.size(withAttributes:
             [NSAttributedString.Key.font: self.titleLabel!.font!])
 
-        //TODO: get 'right' correct; 200420, ph
+        //TODO: TODO get 'right' correct; 200420, ph
         imageEdgeInsets = UIEdgeInsets(top: sign * -(titleSize.height + gap),
                                        left: 0,
                                        bottom: 0,
@@ -747,4 +598,102 @@ open class SOXSegment: UIButton {
 }
 
 
+//MARK: -
+//MARK: - SOXIndexPath
+public struct SOXIndexPath: Equatable {
 
+    //MARK: Properties
+    var row: Int = 0
+    var column: Int = 0
+
+    //MARK: Init
+    public init(row: Int, column: Int) {
+        self.row = row
+        self.column = column
+    }
+
+}
+
+
+//MARK: -
+//MARK: - SOXSegmentDescriptor
+public struct SOXSegmentDescriptor: Equatable {
+
+    //MARK: Properties
+    public var title: String?
+    public var imageName: String?
+
+    public var selectedTextColor: UIColor?
+    public var selectedTintColor: UIColor?
+    public var unSelectedTextColor: UIColor?
+    public var unSelectedTintColor: UIColor?
+    public var selectorColor: UIColor?
+
+    public var selectedFont : UIFont?
+    public var unSelectedFont : UIFont?
+
+    public var textPosition: SOXSegmentControl.TextPosition?
+    public var selectorType: SOXSegmentControl.SelectorType?
+    public var selectorStyle: SOXSegmentControl.SelectorStyle?
+
+
+    //MARK: Equatable
+    private let uuid = UUID()
+
+    public static func == (lhs: SOXSegmentDescriptor, rhs: SOXSegmentDescriptor)
+        -> Bool {
+            return lhs.uuid == rhs.uuid
+    }
+
+
+    //MARK: Convenient Inits
+    //TODO: TODO needs implementation; 280420, ph
+    public init(title: String? = nil,
+                selectedTitleColor: UIColor? = nil,
+                unSelectedTitleColor: UIColor? = nil,
+                selectedFont : UIFont? = nil,
+                unSelectedFont : UIFont? = nil,
+
+                imageName: String? = nil,
+                selectedImageColor: UIColor? = nil,
+                unSelectedImageColor: UIColor? = nil,
+
+                segmentType: SOXSegmentControl.TextPosition? = nil,
+
+                selectorColor: UIColor? = nil,
+                selectorType: SOXSegmentControl.SelectorType? = nil,
+                selectorStyle: SOXSegmentControl.SelectorStyle? = nil) {
+    }
+
+
+    public init(title: String? = nil,
+                imageName: String? = nil,
+                color: UIColor? = nil,
+                selectedColor: UIColor? = nil,
+                unSelectedColor: UIColor? = nil,
+                selectorColor: UIColor? = nil,
+                selectorType:  SOXSegmentControl.SelectorType? = nil) {
+
+        self.title = title
+        self.imageName = imageName
+
+        self.selectorType = selectorType
+
+        if let allColors = color {
+            self.selectedTextColor = allColors
+            self.selectedTintColor = allColors
+            self.selectorColor = allColors
+            self.unSelectedTextColor = allColors
+            self.unSelectedTintColor = allColors
+        }
+        else {
+            self.selectedTextColor = selectedColor
+            self.selectedTintColor = selectedColor
+            self.selectorColor = selectorColor
+
+            self.unSelectedTextColor = unSelectedColor
+            self.unSelectedTintColor = unSelectedColor
+        }
+    }
+
+}
