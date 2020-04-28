@@ -14,8 +14,19 @@ import Foundation
 import UIKit
 
 
-//MARK: - SOXSegmentDescriptor
+//MARK: - SOXIndexPath
+public struct SOXIndexPath: Equatable {
+    var row: Int = 0
+    var column: Int = 0
 
+    public init(row: Int, column: Int) {
+        self.row = row
+        self.column = column
+    }
+}
+
+//MARK: -
+//MARK: - SOXSegmentDescriptor
 public struct SOXSegmentDescriptor: Equatable {
     public var title: String?
     public var imageName: String?
@@ -128,7 +139,15 @@ open class SOXSegmentControl: UIControl {
 
 
     var onValueChanged: ((_ index: Int)->())?
-    public var selectedSegmentPath: SOXIndexPath = SOXIndexPath.init(row: 0, column: 0)
+    public var selectedSegmentPath: SOXIndexPath = SOXIndexPath.init(row: 0, column: 0) {
+        didSet {
+            //TODO: update selectedSegmentIndex
+            let newValue = selectedSegmentPath
+            updateSegment(atIndexPath: oldValue, isSelected: false)
+            updateSegment(atIndexPath: newValue, isSelected: false)
+            moveSelectorView(from: oldValue, to: newValue)
+            updateSelectorViewFrame()
+        } }
     public var selectedSegmentIndex: Int = 0
 
     public var textPosition: SOXSegmentControl.TextPosition = .right { didSet { updateView() } }
@@ -166,75 +185,10 @@ open class SOXSegmentControl: UIControl {
     open override func layoutSubviews() {
         super.layoutSubviews()
 
-        updateView()
-
-        //        let _animated = animateSelectorMovement
-        //        animateSelectorMovement = false
-        //        setSelectedIndex(selectedSegmentIndex)
-        //        animateSelectorMovement = _animated
-    }
-
-
-    open func setSelectedIndexPath(_ newSelectedIndexPath: SOXIndexPath) {
-
-        // Deselect former selected
-        updateSegment(atIndexPath: selectedSegmentPath, isSelected: false)
-
-        selectedSegmentPath = newSelectedIndexPath
-
-        // Select new selected
-        updateSegment(atIndexPath: selectedSegmentPath, isSelected: true)
-    }
-
-    private func updateSegment(atIndexPath indexPath: SOXIndexPath, isSelected: Bool) {
-        let segmentToUpdate = segment(forIndexPath: indexPath)
-
-        if isSelected == true {
-            segmentToUpdate.tintColor = selectedTintColor(forIndexPath: indexPath)
-            segmentToUpdate.titleLabel?.textColor = selectedTextColor(forIndexPath: indexPath)
-            segmentToUpdate.titleLabel?.font = selectedFont(forIndexPath: indexPath)
+        //updateView()
+        if segmentDescriptors.count > 0 {
+            updateSelectorViewFrame()
         }
-        else {
-            segmentToUpdate.tintColor = unSelectedTintColor(forIndexPath: indexPath)
-            segmentToUpdate.titleLabel?.textColor = unSelectedTextColor(forIndexPath: indexPath)
-            segmentToUpdate.titleLabel?.font = unSelectedFont(forIndexPath: indexPath)
-        }
-
-    }
-
-
-
-    private func updateSegmentForSelection(indexPath: SOXIndexPath) {
-
-    }
-
-    private func segment(forIndexPath indexPath: SOXIndexPath)
-        -> SOXSegment {
-            let segmentsForRow = segments[indexPath.row]
-            let segment = segmentsForRow[indexPath.column]
-            return segment
-    }
-
-    open func setSelectedIndex(_ index: Int) {
-        fatalError("map to indexpath and call")
-//        selectedSegmentIndex = index
-//
-//        for (index, button) in segments.enumerated() {
-//            button.tintColor = unSelectedTintColor(forButtonAtIndex: index)
-//            button.setTitleColor(unSelectedTextColor(forButtonAtIndex: index),
-//                                 for: .normal)
-//
-//            // if selectedButton
-//            if button.tag == selectedSegmentIndex {
-//                // Change Colors
-//                button.tintColor = selectedTintColor(forButtonAtIndex: index)
-//                button.setTitleColor(selectedTextColor(forButtonAtIndex: index),
-//                                     for: .normal)
-//
-//                // Move underlineBar
-//                moveSelectorView(toIndex: index)
-//            }
-//        }
     }
 
     open func changeSelectorColor(_ color: UIColor) {
@@ -252,13 +206,16 @@ open class SOXSegmentControl: UIControl {
 
 
     private func updateView() {
+        if segmentDescriptors.count == 0 {
+            return
+        }
+        
         clipsToBounds = true
 
         subviews.forEach( { $0.removeFromSuperview() } )
 
-        updateSegments()
-        arrangeSegments()
 
+        arrangeSegments()
         addSubview(selectorView)
     }
 
@@ -279,23 +236,21 @@ open class SOXSegmentControl: UIControl {
 
 
         for segmentsForRow in segments {
-//            let columnsCount = segmentDescriptorsForRow.count
-//            let endCount = startCount + columnsCount - 1
-//            let slice = segments[startCount...endCount]
-//            startCount = startCount + columnsCount // without - 1!
-//
-//            let segmentsOfRow:[UIView] = Array(slice)
-
             let rowStackView = UIStackView(arrangedSubviews: segmentsForRow)
             rowStackView.axis = .horizontal
             rowStackView.alignment = .fill
             rowStackView.distribution = .fillEqually//.fillProportionally
+            rowStackView.updateConstraints()
+            rowStackView.setNeedsLayout()
 
             outerStackView.addArrangedSubview(rowStackView)
-            //outerStackView.updateConstraints()
-            //outerStackView.setNeedsLayout()
+//            outerStackView.updateConstraints()
+//            outerStackView.setNeedsLayout()
             rowStackView.translatesAutoresizingMaskIntoConstraints = false
         }
+
+//        outerStackView.updateConstraints()
+//        outerStackView.setNeedsLayout()
     }
 
 
@@ -311,6 +266,9 @@ open class SOXSegmentControl: UIControl {
                 let indexPath = SOXIndexPath(row: row, column: column)
 
                 let segment = SOXSegment(indexPath: indexPath, segmentDescriptor: segmentDescriptor)
+//                if column % 2 == 0 {
+//                    segment.backgroundColor = .brown
+//                }
                 segment.tag = index
                 segment.tintColor = unSelectedTintColor(forIndexPath: indexPath)
 
@@ -368,9 +326,11 @@ open class SOXSegmentControl: UIControl {
 public extension SOXSegmentControl {
     func setSegmentDescriptors(_ newSegmentDescriptors: [[SOXSegmentDescriptor]]) {
         segmentDescriptors = newSegmentDescriptors
-
         updateLinearSegmentDescriptors()
+
+        updateSegments()
         updateView()
+        //moveSelectorView(toIndexPath: selectedSegmentPath)
     }
 
     func setTitles(_ titles: [[String]]) {
@@ -390,16 +350,88 @@ public extension SOXSegmentControl {
 
 }
 
+private extension SOXSegmentControl {
+    private func updateSegment(atIndexPath indexPath: SOXIndexPath, isSelected: Bool) {
+        let segmentToUpdate = segment(forIndexPath: indexPath)
+
+        if isSelected == true {
+            segmentToUpdate.tintColor = selectedTintColor(forIndexPath: indexPath)
+            segmentToUpdate.setTitleColor(selectedTextColor(forIndexPath: indexPath), for: .normal)
+            segmentToUpdate.titleLabel?.font = selectedFont(forIndexPath: indexPath)
+        }
+        else {
+            segmentToUpdate.tintColor = unSelectedTintColor(forIndexPath: indexPath)
+            segmentToUpdate.setTitleColor(unSelectedTextColor(forIndexPath: indexPath), for: .normal)
+            segmentToUpdate.titleLabel?.font = unSelectedFont(forIndexPath: indexPath)
+        }
+
+    }
+
+
+    private func segment(forIndexPath indexPath: SOXIndexPath)
+        -> SOXSegment {
+            let segmentsForRow = segments[indexPath.row]
+            let segment = segmentsForRow[indexPath.column]
+            return segment
+    }
+}
 
 //MARK: - Extension - Background Selector View
 private extension SOXSegmentControl {
+    private func updateSelectorView() {
+
+    }
 
     private func updateSelectorViewBackgroundColor() {
         selectorView.backgroundColor = backgroundColor
     }
 
     private func updateSelectorViewFrame() {
+        /*
+         Breite: Breite / Zeile in Row
+         Höhe: Höhe / Zeilen*/
+        let newSelectorRow = selectedSegmentPath.row
+        let newSelectorColumn = selectedSegmentPath.column
 
+        let segmentWidth = frame.width / CGFloat(segmentDescriptors[newSelectorRow].count)
+        let segmentHeight = frame.height / CGFloat(segmentDescriptors.count)
+        let segmentOriginX = CGFloat(newSelectorColumn) * segmentWidth
+        let segmentOriginY = CGFloat(newSelectorRow) * segmentHeight
+
+        let newSelectorOriginX: CGFloat = segmentOriginX
+        var newSelectorOriginY: CGFloat = segmentOriginY
+        let newSelectorWidth: CGFloat = segmentWidth
+        var newSelectorHeight: CGFloat = 0
+
+        switch self.selectorType {
+            case .none:
+                break
+            case .background:
+                newSelectorHeight = segmentHeight
+            case .underlineBar:
+                newSelectorOriginY = segmentHeight - underlineBarSelectorHeight
+                newSelectorHeight = underlineBarSelectorHeight
+        }
+
+        let newUnderlineBarFrame = CGRect(x: newSelectorOriginX,
+                                          y: newSelectorOriginY,
+                                          width: newSelectorWidth,
+                                          height: newSelectorHeight)
+
+        var animationDuration: TimeInterval = 0
+        if animateSelectorMovement == true {
+            animationDuration = 0.25
+        }
+
+        UIView.animate(withDuration: animationDuration,
+                       delay: 0,
+                       options: .curveEaseOut,
+                       animations: { [unowned self] in
+                        //                            fromSegment.isSelected = false
+                        //                            toSegment.isSelected = true
+                        self.selectorView.frame = newUnderlineBarFrame
+                        self.selectorView.backgroundColor = self.selectorColor(forIndexPath: self.selectedSegmentPath) },
+                       completion: nil)
     }
 
     private func updateSelectorViewHeight() {
@@ -429,14 +461,12 @@ private extension SOXSegmentControl {
         selectorView.layer.cornerRadius = cornerRadius
     }
 
-    private func moveSelectorView(from fromIndexPath: SOXIndexPath,
-                     to toIndexPath: SOXIndexPath) {
-        let fromSegment = segment(forIndexPath: fromIndexPath)
-        let toSegment = segment(forIndexPath: toIndexPath)
+    private func moveSelectorView(toIndexPath indexPath: SOXIndexPath) {
+        let toSegment = segment(forIndexPath: indexPath)
 
         // move SelectorView
         guard let buttonOrigin = toSegment.superview?.convert(toSegment.frame.origin,
-                                                                  to: toSegment.superview?.superview)
+                                                              to: toSegment.superview?.superview)
             else { fatalError() }
 
         let newOriginX = buttonOrigin.x
@@ -463,11 +493,20 @@ private extension SOXSegmentControl {
                        delay: 0,
                        options: .curveEaseOut,
                        animations: { [unowned self] in
-                            fromSegment.isSelected = false
-                            toSegment.isSelected = true
-                            self.selectorView.frame = newUnderlineBarFrame
-                            self.selectorView.backgroundColor = self.selectorColor(forIndexPath: toIndexPath) },
+                        //                            fromSegment.isSelected = false
+                        //                            toSegment.isSelected = true
+                        self.selectorView.frame = newUnderlineBarFrame
+                        self.selectorView.backgroundColor = self.selectorColor(forIndexPath: indexPath) },
                        completion: nil)
+    }
+
+    private func moveSelectorView(from fromIndexPath: SOXIndexPath,
+                     to toIndexPath: SOXIndexPath) {
+        if fromIndexPath == toIndexPath {
+            return
+        }
+        moveSelectorView(toIndexPath: toIndexPath)
+
     }
 
 }
@@ -478,9 +517,9 @@ extension SOXSegmentControl {
 
     @objc
     private func buttonTapped(_ sender: SOXSegment) {
-        moveSelectorView(from: selectedSegmentPath,
-                         to: sender.indexPath)
-        selectedSegmentIndex = sender.tag
+
+
+        selectedSegmentIndex = sender.tag //TODO: remove if didSet selectedSegmentPath changes ~Index
         selectedSegmentPath = sender.indexPath
 
 
@@ -681,8 +720,4 @@ open class SOXSegment: UIButton {
 }
 
 
-public struct SOXIndexPath {
-    var row: Int = 0
-    var column: Int = 0
-}
 

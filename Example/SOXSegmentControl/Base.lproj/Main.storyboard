@@ -253,8 +253,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" destinationCreationSelector="Simple" id="IKL-ax-KVl"/>
-                        <segue destination="Dmw-k6-15L" kind="relationship" relationship="viewControllers" destinationCreationSelector="Complex" id="III-9j-5hN"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="IKL-ax-KVl"/>
+                        <segue destination="Dmw-k6-15L" kind="relationship" relationship="viewControllers" id="III-9j-5hN"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7xO-4z-1c5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -61,6 +61,7 @@ extension RainbowSegmentControlViewController {
         ]
         
         segmentControl.setSegmentDescriptors([segments])
+        segmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 2)
     }
 
 }
