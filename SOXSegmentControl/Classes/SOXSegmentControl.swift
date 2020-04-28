@@ -130,7 +130,7 @@ open class SOXSegmentControl: UIControl {
     //MARK: - Lets and Vars
     //MARK: Selector Background Properties
     private var selectorView: UIView = UIView()
-    public var animateSelectorMovement: Bool = true
+    public var selectorMovementAnimated: Bool = true
     public var selectorColor: UIColor = .lightGray
     public var selectorStyle: SelectorStyle = .square { didSet { updateSelectorViewFrame() } }
     public var selectorType: SelectorType = .background { didSet { updateSelectorViewFrame() } }
@@ -444,7 +444,7 @@ private extension SOXSegmentControl {
                                           height: newSelectorHeight)
 
         var animationDuration: TimeInterval = 0
-        if animateSelectorMovement == true {
+        if selectorMovementAnimated == true {
             animationDuration = 0.25
         }
 

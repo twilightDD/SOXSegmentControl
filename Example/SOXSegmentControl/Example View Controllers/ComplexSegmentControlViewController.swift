@@ -21,6 +21,7 @@ class ComplexSegmentControlViewController: UIViewController {
     @IBOutlet weak var selectorTypeSegmentControl: SOXSegmentControl!
     @IBOutlet weak var selectorStyleSegmentControl: SOXSegmentControl!
     @IBOutlet weak var textPositionSegmentControl: SOXSegmentControl!
+    @IBOutlet weak var animateSelectorMovementSegmentControl: SOXSegmentControl!
 
     //MARK: - Init&Co.
     override func viewDidLoad() {
@@ -50,6 +51,10 @@ class ComplexSegmentControlViewController: UIViewController {
             if let textPosition = SOXSegmentControl.TextPosition.init(rawValue: selectedSegmentIndex) {
                 segmentControl.textPosition = textPosition
             }
+        }
+        else if sender == animateSelectorMovementSegmentControl {
+            let animate = selectedSegmentIndex == 1 ? true : false 
+            segmentControl.selectorMovementAnimated = animate
         }
     }
 
@@ -123,7 +128,11 @@ extension ComplexSegmentControlViewController {
         let textPositionColumn = segmentControl.textPosition.rawValue
         textPositionSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: textPositionColumn)
 
-
+        // animateSelectorMovement
+        animateSelectorMovementSegmentControl.selectorType = .underlineBar
+        animateSelectorMovementSegmentControl.setTitles([["false", "true"]])
+        let animateSelectorMovementColumn = segmentControl.selectorMovementAnimated == true ? 1 : 0
+        animateSelectorMovementSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: animateSelectorMovementColumn)
 
     }
 }
