@@ -20,7 +20,7 @@ class ComplexSegmentControlViewController: UIViewController {
     // Setting SegmentControls
     @IBOutlet weak var selectorTypeSegmentControl: SOXSegmentControl!
     @IBOutlet weak var selectorStyleSegmentControl: SOXSegmentControl!
-
+    @IBOutlet weak var textPositionSegmentControl: SOXSegmentControl!
 
     //MARK: - Init&Co.
     override func viewDidLoad() {
@@ -44,6 +44,11 @@ class ComplexSegmentControlViewController: UIViewController {
         else if sender == selectorStyleSegmentControl {
             if let selectorStyle = SOXSegmentControl.SelectorStyle.init(rawValue: selectedSegmentIndex) {
                 segmentControl.selectorStyle = selectorStyle
+            }
+        }
+        else if sender == textPositionSegmentControl {
+            if let textPosition = SOXSegmentControl.TextPosition.init(rawValue: selectedSegmentIndex) {
+                segmentControl.textPosition = textPosition
             }
         }
     }
@@ -105,9 +110,14 @@ extension ComplexSegmentControlViewController {
         selectorTypeSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 2)
 
         // selectorStyle
-        selectorStyleSegmentControl.selectorStyle = .square
+        selectorStyleSegmentControl.selectorType = .underlineBar
         selectorStyleSegmentControl.setTitles([["square", "round", "rounded"]])
         selectorStyleSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 0)
+
+        // textPosition
+        textPositionSegmentControl.selectorType = .underlineBar
+        textPositionSegmentControl.setTitles([["none", "right", "bottom"]])
+        textPositionSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 0)
 
 
 

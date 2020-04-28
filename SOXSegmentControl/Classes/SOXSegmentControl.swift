@@ -149,7 +149,7 @@ open class SOXSegmentControl: UIControl {
         } }
     public var selectedSegmentIndex: Int = 0
 
-    public var textPosition: SOXSegmentControl.TextPosition = .right { didSet { updateView() } }
+    public var textPosition: SOXSegmentControl.TextPosition = .right { didSet { updateTextPosition() } }
 
     private var segmentDescriptors: [[SOXSegmentDescriptor]] = [[SOXSegmentDescriptor]]()
     private var linearSegmentDescriptors = [SOXSegmentDescriptor]()
@@ -451,6 +451,11 @@ private extension SOXSegmentControl {
                         self.selectorView.layer.cornerRadius = selectorViewCornerRadius
             },
                        completion: nil)
+    }
+
+    private func updateTextPosition() {
+        updateSegments()
+        updateView()
     }
 
     private func updateSelectorViewHeight() {
