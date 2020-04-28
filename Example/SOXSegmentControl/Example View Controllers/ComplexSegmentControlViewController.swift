@@ -69,6 +69,7 @@ extension ComplexSegmentControlViewController {
         segmentControl.selectedTextColor = .label
         segmentControl.unSelectedTextColor = .darkGray
         segmentControl.selectorType = .underlineBar
+        segmentControl.selectorStyle = .square
 
 
 
@@ -107,17 +108,20 @@ extension ComplexSegmentControlViewController {
         // selectorType
         selectorTypeSegmentControl.selectorType = .underlineBar
         selectorTypeSegmentControl.setTitles([["none", "background", "underline"]])
-        selectorTypeSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 2)
+        let selectorTypeColumn = segmentControl.selectorType.rawValue
+        selectorTypeSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: selectorTypeColumn)
 
         // selectorStyle
         selectorStyleSegmentControl.selectorType = .underlineBar
         selectorStyleSegmentControl.setTitles([["square", "round", "rounded"]])
-        selectorStyleSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 0)
+        let selectorStyleColumn = segmentControl.selectorStyle.rawValue
+        selectorStyleSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: selectorStyleColumn)
 
         // textPosition
         textPositionSegmentControl.selectorType = .underlineBar
         textPositionSegmentControl.setTitles([["none", "right", "bottom"]])
-        textPositionSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 0)
+        let textPositionColumn = segmentControl.textPosition.rawValue
+        textPositionSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: textPositionColumn)
 
 
 
