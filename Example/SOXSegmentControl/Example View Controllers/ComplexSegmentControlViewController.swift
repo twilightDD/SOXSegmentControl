@@ -20,6 +20,7 @@ class ComplexSegmentControlViewController: UIViewController {
     // Setting SegmentControls
     @IBOutlet weak var selectorTypeSegmentControl: SOXSegmentControl!
     @IBOutlet weak var selectorStyleSegmentControl: SOXSegmentControl!
+    @IBOutlet weak var selectorColorSegmentControl: SOXSegmentControl!
     @IBOutlet weak var textPositionSegmentControl: SOXSegmentControl!
     @IBOutlet weak var animateSelectorMovementSegmentControl: SOXSegmentControl!
 
@@ -46,6 +47,18 @@ class ComplexSegmentControlViewController: UIViewController {
             if let selectorStyle = SOXSegmentControl.SelectorStyle.init(rawValue: selectedSegmentIndex) {
                 segmentControl.selectorStyle = selectorStyle
             }
+        }
+        else if sender == selectorColorSegmentControl {
+            var selectorColor: UIColor = .systemRed
+            switch selectedSegmentIndex {
+                case 0:
+                    selectorColor = .darkGray
+                case 1:
+                    selectorColor = .lightGray
+                default:
+                    break
+            }
+            segmentControl.selectorColor = selectorColor
         }
         else if sender == textPositionSegmentControl {
             if let textPosition = SOXSegmentControl.TextPosition.init(rawValue: selectedSegmentIndex) {
@@ -122,6 +135,11 @@ extension ComplexSegmentControlViewController {
         let selectorStyleColumn = segmentControl.selectorStyle.rawValue
         selectorStyleSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: selectorStyleColumn)
 
+        // selectorColor
+        selectorColorSegmentControl.selectorType = .underlineBar
+        selectorColorSegmentControl.setTitles([["darkgrey", "lightgrey", "red"]])
+        selectorColorSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 1)
+
         // textPosition
         textPositionSegmentControl.selectorType = .underlineBar
         textPositionSegmentControl.setTitles([["none", "right", "bottom"]])
@@ -133,6 +151,9 @@ extension ComplexSegmentControlViewController {
         animateSelectorMovementSegmentControl.setTitles([["false", "true"]])
         let animateSelectorMovementColumn = segmentControl.selectorMovementAnimated == true ? 1 : 0
         animateSelectorMovementSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: animateSelectorMovementColumn)
+
+
+
 
     }
 }

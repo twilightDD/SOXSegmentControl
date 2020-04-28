@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -270,113 +271,125 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Wx-MA-U5m" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
-                                <rect key="frame" x="16" y="65" width="343" height="200"/>
+                                <rect key="frame" x="16" y="64.5" width="343" height="200"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="mxe-TJ-CBw"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ComplexSegmentControl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJa-QJ-zV1">
-                                <rect key="frame" x="16" y="20" width="192.5" height="21"/>
+                                <rect key="frame" x="16" y="20" width="192.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="selectorType" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDI-SP-JPy">
-                                <rect key="frame" x="16" y="275" width="100.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YS1-2Z-dMO" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
-                                <rect key="frame" x="127" y="273" width="232" height="25"/>
-                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="ImE-JS-O0v"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="XbE-9g-rKa"/>
-                                </connections>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="selectorStyle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8X-Ko-tyZ">
-                                <rect key="frame" x="16" y="308" width="100.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oXb-it-Wwa" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
-                                <rect key="frame" x="125" y="306" width="234" height="25"/>
-                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="cUO-ls-aam"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="uof-N6-Qt6"/>
-                                </connections>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="textPosition" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0h-cq-X2E">
-                                <rect key="frame" x="16" y="341" width="100.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Da-bb-5SM" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
-                                <rect key="frame" x="125" y="339" width="232" height="25"/>
-                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="HBa-1b-bUV"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="dI2-6P-bFV"/>
-                                </connections>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="animateSelector" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agn-is-V2N">
-                                <rect key="frame" x="16" y="374" width="124.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ah5-Fz-tQ9" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
-                                <rect key="frame" x="148" y="372" width="208" height="25"/>
-                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="khV-HU-miy"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="QzF-1f-ynB"/>
-                                </connections>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="C8D-O1-itz">
+                                <rect key="frame" x="16" y="284" width="343" height="157"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iYL-au-aCC">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="157"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="selectorType" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDI-SP-JPy">
+                                                <rect key="frame" x="236.5" y="0.0" width="98.5" height="25"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="selectorStyle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8X-Ko-tyZ">
+                                                <rect key="frame" x="234.5" y="33" width="100.5" height="25"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="selectorColor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5P-TB-fAY">
+                                                <rect key="frame" x="232" y="66" width="103" height="25"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="animateSelector" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agn-is-V2N">
+                                                <rect key="frame" x="210.5" y="99" width="124.5" height="25"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="textPosition" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0h-cq-X2E">
+                                                <rect key="frame" x="245" y="132" width="90" height="25"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Cpi-1D-tU0">
+                                        <rect key="frame" x="343" y="0.0" width="0.0" height="157"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YS1-2Z-dMO" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="25"/>
+                                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="ImE-JS-O0v"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="XbE-9g-rKa"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oXb-it-Wwa" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
+                                                <rect key="frame" x="0.0" y="33" width="0.0" height="25"/>
+                                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="cUO-ls-aam"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="uof-N6-Qt6"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Psz-HH-oiO" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
+                                                <rect key="frame" x="0.0" y="66" width="0.0" height="25"/>
+                                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="6NB-cN-Ih2"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="lbv-oN-H39"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ah5-Fz-tQ9" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
+                                                <rect key="frame" x="0.0" y="99" width="0.0" height="25"/>
+                                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="khV-HU-miy"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="QzF-1f-ynB"/>
+                                                </connections>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Da-bb-5SM" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
+                                                <rect key="frame" x="0.0" y="132" width="0.0" height="25"/>
+                                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="HBa-1b-bUV"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="segmentControllAction:" destination="Dmw-k6-15L" eventType="valueChanged" id="dI2-6P-bFV"/>
+                                                </connections>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="7Da-bb-5SM" firstAttribute="top" secondItem="oXb-it-Wwa" secondAttribute="bottom" constant="8" id="01O-Or-k1e"/>
-                            <constraint firstItem="w0h-cq-X2E" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="6yJ-Wb-Dp9"/>
-                            <constraint firstItem="agn-is-V2N" firstAttribute="centerY" secondItem="ah5-Fz-tQ9" secondAttribute="centerY" id="7M7-3R-OMK"/>
-                            <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="7Da-bb-5SM" secondAttribute="trailing" constant="18" id="D0j-Bn-6pk"/>
-                            <constraint firstItem="v8X-Ko-tyZ" firstAttribute="width" secondItem="XDI-SP-JPy" secondAttribute="width" id="E61-FP-OfC"/>
-                            <constraint firstItem="w0h-cq-X2E" firstAttribute="width" secondItem="XDI-SP-JPy" secondAttribute="width" id="EwS-5Z-x4g"/>
-                            <constraint firstItem="agn-is-V2N" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="H8z-mt-76v"/>
-                            <constraint firstItem="oXb-it-Wwa" firstAttribute="top" secondItem="YS1-2Z-dMO" secondAttribute="bottom" constant="8" id="OdP-hL-ugw"/>
-                            <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="YS1-2Z-dMO" secondAttribute="trailing" constant="16" id="P4d-4X-DwD"/>
                             <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="bJa-QJ-zV1" secondAttribute="trailing" constant="166.5" id="QVn-4X-kPT"/>
-                            <constraint firstItem="v8X-Ko-tyZ" firstAttribute="centerY" secondItem="oXb-it-Wwa" secondAttribute="centerY" id="QYs-1r-hNU"/>
-                            <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="oXb-it-Wwa" secondAttribute="trailing" constant="16" id="TWK-Dk-Ahc"/>
-                            <constraint firstItem="YS1-2Z-dMO" firstAttribute="top" secondItem="5Wx-MA-U5m" secondAttribute="bottom" constant="8" id="UTc-rB-fbL"/>
                             <constraint firstItem="5Wx-MA-U5m" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="Uiq-G1-7SX"/>
-                            <constraint firstItem="w0h-cq-X2E" firstAttribute="centerY" secondItem="7Da-bb-5SM" secondAttribute="centerY" id="Uuh-Cg-DNy"/>
-                            <constraint firstItem="YS1-2Z-dMO" firstAttribute="leading" secondItem="XDI-SP-JPy" secondAttribute="trailing" constant="10.5" id="Vec-ln-1gb"/>
                             <constraint firstItem="5Wx-MA-U5m" firstAttribute="top" secondItem="bJa-QJ-zV1" secondAttribute="bottom" constant="24" id="WZs-GV-FjC"/>
-                            <constraint firstItem="XDI-SP-JPy" firstAttribute="centerY" secondItem="YS1-2Z-dMO" secondAttribute="centerY" id="aBq-ub-2Ap"/>
+                            <constraint firstItem="C8D-O1-itz" firstAttribute="leading" secondItem="5Wx-MA-U5m" secondAttribute="leading" id="YVp-S8-gNg"/>
                             <constraint firstItem="bJa-QJ-zV1" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="b3x-q0-Xgv"/>
-                            <constraint firstItem="ah5-Fz-tQ9" firstAttribute="leading" secondItem="agn-is-V2N" secondAttribute="trailing" constant="7.5" id="bg2-pw-inL"/>
-                            <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="ah5-Fz-tQ9" secondAttribute="trailing" constant="19" id="cS1-cS-WkL"/>
-                            <constraint firstItem="ah5-Fz-tQ9" firstAttribute="top" secondItem="7Da-bb-5SM" secondAttribute="bottom" constant="8" id="fZG-Tc-Laj"/>
+                            <constraint firstItem="C8D-O1-itz" firstAttribute="top" secondItem="5Wx-MA-U5m" secondAttribute="bottom" constant="19.5" id="dbp-Nr-tQW"/>
                             <constraint firstItem="mOc-rP-qvT" firstAttribute="trailing" secondItem="5Wx-MA-U5m" secondAttribute="trailing" constant="16" id="gg8-Ev-SCV"/>
-                            <constraint firstItem="7Da-bb-5SM" firstAttribute="leading" secondItem="w0h-cq-X2E" secondAttribute="trailing" constant="8.5" id="gzB-7v-hMV"/>
                             <constraint firstItem="bJa-QJ-zV1" firstAttribute="top" secondItem="mOc-rP-qvT" secondAttribute="top" constant="20" id="hHb-oD-lnt"/>
-                            <constraint firstItem="v8X-Ko-tyZ" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="imC-BP-Ncg"/>
-                            <constraint firstItem="oXb-it-Wwa" firstAttribute="leading" secondItem="v8X-Ko-tyZ" secondAttribute="trailing" constant="8.5" id="iqU-PU-hlf"/>
-                            <constraint firstItem="XDI-SP-JPy" firstAttribute="leading" secondItem="mOc-rP-qvT" secondAttribute="leading" constant="16" id="iy7-QS-iTz"/>
+                            <constraint firstItem="C8D-O1-itz" firstAttribute="trailing" secondItem="5Wx-MA-U5m" secondAttribute="trailing" id="tLB-1I-ezx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mOc-rP-qvT"/>
                     </view>
@@ -384,6 +397,7 @@
                     <connections>
                         <outlet property="animateSelectorMovementSegmentControl" destination="ah5-Fz-tQ9" id="NZc-Fa-Q8p"/>
                         <outlet property="segmentControl" destination="5Wx-MA-U5m" id="r70-4S-0vI"/>
+                        <outlet property="selectorColorSegmentControl" destination="Psz-HH-oiO" id="ke5-zD-rQ3"/>
                         <outlet property="selectorStyleSegmentControl" destination="oXb-it-Wwa" id="mMf-PD-XOG"/>
                         <outlet property="selectorTypeSegmentControl" destination="YS1-2Z-dMO" id="2Zo-zA-IIs"/>
                         <outlet property="textPositionSegmentControl" destination="7Da-bb-5SM" id="j0i-Qh-s5Y"/>
