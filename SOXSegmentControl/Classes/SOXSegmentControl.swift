@@ -57,7 +57,7 @@ open class SOXSegmentControl: UIControl {
 
     //MARK: - Call Back
     //TODO: TODO needs to be reworked; 280420, ph
-    var onValueChanged: ((_ index: Int)->())?
+    public var onValueChanged: ((_ index: Int)->())?
 
     //MARK: - Private Properties
     private var segmentDescriptors: [[SOXSegmentDescriptor]] = [[SOXSegmentDescriptor]]()
@@ -229,7 +229,7 @@ extension SOXSegmentControl {
                         case .right:
                             segment.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
                         case .bottom:
-                            segment.centerImageAndButton(5, imageOnTop: true)
+                            segment.centerImageAndButton(1, imageOnTop: true)
                     }
                 }
 
@@ -299,6 +299,12 @@ extension SOXSegmentControl {
     private func updateSelectorViewBackgroundColor() {
         selectorView.backgroundColor = backgroundColor
     }
+
+    private func moveSelectorView(toIndexPath indexPath: SOXIndexPath) {
+        
+    }
+
+
 
     private func updateSelectorViewFrame() {
         if segmentDescriptors.count == 0 { return }

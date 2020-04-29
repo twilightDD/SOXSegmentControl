@@ -49,16 +49,7 @@ class ComplexSegmentControlViewController: UIViewController {
             }
         }
         else if sender == selectorColorSegmentControl {
-            var selectorColor: UIColor = .systemRed
-            switch selectedSegmentIndex {
-                case 0:
-                    selectorColor = .darkGray
-                case 1:
-                    selectorColor = .lightGray
-                default:
-                    break
-            }
-            segmentControl.selectorColor = selectorColor
+            // nothing here - see onValueChange-Block in setupSettingsSegmentControls()
         }
         else if sender == textPositionSegmentControl {
             if let textPosition = SOXSegmentControl.TextPosition.init(rawValue: selectedSegmentIndex) {
@@ -79,17 +70,7 @@ extension ComplexSegmentControlViewController {
 
     private func setupSegmentControl() {
         segmentControl.backgroundColor = .clear
-
-        segmentControl.textPosition = .bottom
-
-        segmentControl.selectorColor = .lightGray
-
-        segmentControl.selectedTextColor = .label
-        segmentControl.unSelectedTextColor = .darkGray
-        segmentControl.selectorType = .underlineBar
-        segmentControl.selectorStyle = .square
-
-
+        
 
         let segments = [SOXSegmentDescriptor(title: "Segment A",
                                              imageName: "a.circle"),
@@ -139,6 +120,18 @@ extension ComplexSegmentControlViewController {
         selectorColorSegmentControl.selectorType = .underlineBar
         selectorColorSegmentControl.setTitles([["darkgrey", "lightgrey", "red"]])
         selectorColorSegmentControl.selectedSegmentPath = SOXIndexPath(row: 0, column: 1)
+        selectorColorSegmentControl.onValueChanged = { [unowned self] selectedIndex in
+            var selectorColor: UIColor = .systemRed
+            switch selectedIndex {
+                case 0:
+                    selectorColor = .darkGray
+                case 1:
+                    selectorColor = .lightGray
+                default:
+                    break
+            }
+            self.segmentControl.selectorColor = selectorColor
+        }
 
         // textPosition
         textPositionSegmentControl.selectorType = .underlineBar
