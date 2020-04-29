@@ -318,8 +318,8 @@ extension SOXSegmentControl {
         var newSelectorHeight: CGFloat = 0
 
         // Selector Type
-
-        switch self.selectorType {
+        let selectorTypeForSegment = selectorType(forIndexPath: selectedSegmentPath)
+        switch selectorTypeForSegment {
             case .none:
                 break
             case .background:
@@ -462,6 +462,17 @@ extension SOXSegmentControl {
             }
 
             return unSelectedTintColor
+    }
+
+
+    private func selectorType(forIndexPath indexPath: SOXIndexPath)
+        -> SelectorType {
+            let segmentDescriptor = self.segmentDescriptor(forIndexPath: indexPath)
+            if let selectorType = segmentDescriptor.selectorType {
+                return selectorType
+            }
+
+            return selectorType
     }
 
     private func selectorColor(forIndexPath indexPath: SOXIndexPath)
