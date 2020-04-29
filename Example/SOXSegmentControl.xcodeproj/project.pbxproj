@@ -24,6 +24,8 @@
 		D0790549245468630075CB5D /* RainbowSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0790547245468630075CB5D /* RainbowSegmentControlViewController.swift */; };
 		D079054B2454E64F0075CB5D /* ComplexSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079054A2454E64F0075CB5D /* ComplexSegmentControlViewController.swift */; };
 		D079054C2454E64F0075CB5D /* ComplexSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079054A2454E64F0075CB5D /* ComplexSegmentControlViewController.swift */; };
+		D079054E2458FC300075CB5D /* ColorfulSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079054D2458FC300075CB5D /* ColorfulSegmentControlViewController.swift */; };
+		D079054F2458FC300075CB5D /* ColorfulSegmentControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079054D2458FC300075CB5D /* ColorfulSegmentControlViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,7 @@
 		D0790544245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextAndImageSegmentControlViewController.swift; sourceTree = "<group>"; };
 		D0790547245468630075CB5D /* RainbowSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowSegmentControlViewController.swift; sourceTree = "<group>"; };
 		D079054A2454E64F0075CB5D /* ComplexSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexSegmentControlViewController.swift; sourceTree = "<group>"; };
+		D079054D2458FC300075CB5D /* ColorfulSegmentControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorfulSegmentControlViewController.swift; sourceTree = "<group>"; };
 		F7C213728293C279A44DBFDC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -161,6 +164,7 @@
 				D07905412454637D0075CB5D /* SimpleImageSegmentControlViewController.swift */,
 				D0790544245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift */,
 				D0790547245468630075CB5D /* RainbowSegmentControlViewController.swift */,
+				D079054D2458FC300075CB5D /* ColorfulSegmentControlViewController.swift */,
 				D079054A2454E64F0075CB5D /* ComplexSegmentControlViewController.swift */,
 			);
 			path = "Example View Controllers";
@@ -364,6 +368,7 @@
 				D07905402453D2870075CB5D /* SimpleTextSegmentControlViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				D0790545245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift in Sources */,
+				D079054E2458FC300075CB5D /* ColorfulSegmentControlViewController.swift in Sources */,
 				D0790548245468630075CB5D /* RainbowSegmentControlViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +379,7 @@
 			files = (
 				D0790546245466AD0075CB5D /* SimpleTextAndImageSegmentControlViewController.swift in Sources */,
 				D0790549245468630075CB5D /* RainbowSegmentControlViewController.swift in Sources */,
+				D079054F2458FC300075CB5D /* ColorfulSegmentControlViewController.swift in Sources */,
 				D079054C2454E64F0075CB5D /* ComplexSegmentControlViewController.swift in Sources */,
 				D07905432454637D0075CB5D /* SimpleImageSegmentControlViewController.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,

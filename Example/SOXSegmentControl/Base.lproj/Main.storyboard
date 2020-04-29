@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Exb-Re-ILC">
-                                <rect key="frame" x="16" y="155" width="343" height="60"/>
+                                <rect key="frame" x="16" y="153" width="343" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="ef1-9l-pvW"/>
                                 </constraints>
@@ -41,13 +41,13 @@
                                 </connections>
                             </containerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SimpleImageSegmentControl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cp3-v0-rcS">
-                                <rect key="frame" x="16" y="126" width="336" height="21"/>
+                                <rect key="frame" x="16" y="124" width="336" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a40-Wy-Qab">
-                                <rect key="frame" x="16" y="264" width="343" height="60"/>
+                                <rect key="frame" x="16" y="257" width="343" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="4sW-5q-uOS"/>
                                 </constraints>
@@ -56,13 +56,13 @@
                                 </connections>
                             </containerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SimpleTextAndImageSegmentControl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G87-Fh-e9G">
-                                <rect key="frame" x="16" y="235" width="336" height="21"/>
+                                <rect key="frame" x="16" y="228" width="336" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzU-bO-Zbd">
-                                <rect key="frame" x="16" y="370" width="343" height="60"/>
+                                <rect key="frame" x="16" y="361" width="343" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="TUH-fN-KBe"/>
                                 </constraints>
@@ -71,37 +71,58 @@
                                 </connections>
                             </containerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RainbowSegmentControl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dg-Fi-2V0">
-                                <rect key="frame" x="16" y="341" width="190.5" height="21"/>
+                                <rect key="frame" x="16" y="332" width="190.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ColorfulSegmentControl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRm-5d-Ma2">
+                                <rect key="frame" x="16" y="436" width="190.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znT-XU-jcJ">
+                                <rect key="frame" x="16" y="465" width="343" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="9eB-6Q-87g"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="tVE-lr-I75" kind="embed" id="p3D-DK-QfV"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="3dg-Fi-2V0" firstAttribute="top" secondItem="a40-Wy-Qab" secondAttribute="bottom" constant="17" id="4s9-Bb-upQ"/>
+                            <constraint firstItem="3dg-Fi-2V0" firstAttribute="top" secondItem="a40-Wy-Qab" secondAttribute="bottom" constant="15" id="4s9-Bb-upQ"/>
                             <constraint firstItem="190-hk-ArX" firstAttribute="top" secondItem="G97-Ak-HQd" secondAttribute="bottom" constant="8" id="7rD-V0-Z1Q"/>
                             <constraint firstItem="cp3-v0-rcS" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="D4W-yh-n36"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="Exb-Re-ILC" secondAttribute="trailing" constant="16" id="Dqy-iY-0BK"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="G97-Ak-HQd" secondAttribute="trailing" constant="16" id="KRI-7C-xNS"/>
                             <constraint firstItem="G87-Fh-e9G" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="NX2-Vo-eIn"/>
                             <constraint firstItem="Exb-Re-ILC" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="Olq-Ng-u3t"/>
+                            <constraint firstItem="mRm-5d-Ma2" firstAttribute="top" secondItem="tzU-bO-Zbd" secondAttribute="bottom" constant="15" id="P8c-QC-24E"/>
                             <constraint firstItem="G97-Ak-HQd" firstAttribute="top" secondItem="RoL-BY-GHW" secondAttribute="top" constant="20" id="RmX-jG-pCS"/>
                             <constraint firstItem="tzU-bO-Zbd" firstAttribute="top" secondItem="3dg-Fi-2V0" secondAttribute="bottom" constant="8" id="Rnb-FZ-9d8"/>
-                            <constraint firstItem="cp3-v0-rcS" firstAttribute="top" secondItem="190-hk-ArX" secondAttribute="bottom" constant="17" id="SkG-em-9Qw"/>
+                            <constraint firstItem="cp3-v0-rcS" firstAttribute="top" secondItem="190-hk-ArX" secondAttribute="bottom" constant="15" id="SkG-em-9Qw"/>
                             <constraint firstItem="3dg-Fi-2V0" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="TZt-rc-ahS"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="a40-Wy-Qab" secondAttribute="trailing" constant="16" id="VD6-Nh-9P4"/>
                             <constraint firstItem="Exb-Re-ILC" firstAttribute="top" secondItem="cp3-v0-rcS" secondAttribute="bottom" constant="8" id="Vxd-tw-1PP"/>
                             <constraint firstItem="a40-Wy-Qab" firstAttribute="top" secondItem="G87-Fh-e9G" secondAttribute="bottom" constant="8" id="cPw-WW-EHY"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="G87-Fh-e9G" secondAttribute="trailing" constant="23" id="dsg-3I-AUZ"/>
+                            <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="znT-XU-jcJ" secondAttribute="trailing" constant="16" id="eKs-yU-Pin"/>
+                            <constraint firstItem="mRm-5d-Ma2" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="gjW-Ev-BJz"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="cp3-v0-rcS" secondAttribute="trailing" constant="23" id="grA-kn-W3w"/>
                             <constraint firstItem="190-hk-ArX" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="jsE-7p-BUt"/>
                             <constraint firstItem="tzU-bO-Zbd" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="lG6-I7-782"/>
+                            <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="mRm-5d-Ma2" secondAttribute="trailing" constant="168.5" id="n5i-gw-yko"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="3dg-Fi-2V0" secondAttribute="trailing" constant="168.5" id="oWX-YN-GW1"/>
                             <constraint firstItem="G97-Ak-HQd" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="p8z-au-Y7Z"/>
+                            <constraint firstItem="znT-XU-jcJ" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="p9K-ud-haB"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="190-hk-ArX" secondAttribute="trailing" constant="16" id="pPs-EO-44U"/>
                             <constraint firstItem="RoL-BY-GHW" firstAttribute="trailing" secondItem="tzU-bO-Zbd" secondAttribute="trailing" constant="16" id="rRJ-P7-ASz"/>
-                            <constraint firstItem="G87-Fh-e9G" firstAttribute="top" secondItem="Exb-Re-ILC" secondAttribute="bottom" constant="20" id="uYy-ln-kEM"/>
+                            <constraint firstItem="znT-XU-jcJ" firstAttribute="top" secondItem="mRm-5d-Ma2" secondAttribute="bottom" constant="8" id="sxt-Em-yzH"/>
+                            <constraint firstItem="G87-Fh-e9G" firstAttribute="top" secondItem="Exb-Re-ILC" secondAttribute="bottom" constant="15" id="uYy-ln-kEM"/>
                             <constraint firstItem="a40-Wy-Qab" firstAttribute="leading" secondItem="RoL-BY-GHW" secondAttribute="leading" constant="16" id="wdi-pf-Z6z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RoL-BY-GHW"/>
@@ -406,6 +427,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AJN-XR-emm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1068" y="962.96851574212906"/>
+        </scene>
+        <!--Colorful Segment Control View Controller-->
+        <scene sceneID="QWu-x6-eTe">
+            <objects>
+                <viewController id="tVE-lr-I75" customClass="ColorfulSegmentControlViewController" customModule="SOXSegmentControl_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Xb-Ql-2oe">
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Con-Uq-UzF" customClass="SOXSegmentControl" customModule="SOXSegmentControl">
+                                <rect key="frame" x="40" y="0.0" width="263" height="60"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="segmentControllAction:" destination="tVE-lr-I75" eventType="valueChanged" id="Tm6-PF-mr2"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Con-Uq-UzF" firstAttribute="top" secondItem="gyW-05-uv0" secondAttribute="top" id="4mj-wc-zd7"/>
+                            <constraint firstItem="Con-Uq-UzF" firstAttribute="leading" secondItem="gyW-05-uv0" secondAttribute="leading" constant="40" id="GcA-kF-yuN"/>
+                            <constraint firstItem="gyW-05-uv0" firstAttribute="bottom" secondItem="Con-Uq-UzF" secondAttribute="bottom" id="ofX-Bn-oOk"/>
+                            <constraint firstItem="gyW-05-uv0" firstAttribute="trailing" secondItem="Con-Uq-UzF" secondAttribute="trailing" constant="40" id="op5-ju-oOM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gyW-05-uv0"/>
+                    </view>
+                    <connections>
+                        <outlet property="segmentControl" destination="Con-Uq-UzF" id="JtI-en-QHK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lga-c9-VsX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1905" y="178"/>
         </scene>
     </scenes>
 </document>

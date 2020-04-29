@@ -649,8 +649,8 @@ public struct SOXSegmentDescriptor: Equatable {
     //MARK: Convenient Inits
     //TODO: TODO needs implementation; 280420, ph
     public init(title: String? = nil,
-                selectedTitleColor: UIColor? = nil,
-                unSelectedTitleColor: UIColor? = nil,
+                selectedTextColor: UIColor? = nil,
+                unSelectedTextColor: UIColor? = nil,
                 selectedFont : UIFont? = nil,
                 unSelectedFont : UIFont? = nil,
 
@@ -663,6 +663,21 @@ public struct SOXSegmentDescriptor: Equatable {
                 selectorColor: UIColor? = nil,
                 selectorType: SOXSegmentControl.SelectorType? = nil,
                 selectorStyle: SOXSegmentControl.SelectorStyle? = nil) {
+        self.title = title
+        self.selectedTextColor = selectedTextColor
+        self.unSelectedTextColor = unSelectedTextColor
+        self.selectedFont = selectedFont
+        self.unSelectedFont = unSelectedFont
+
+        self.imageName = imageName
+        self.selectedTintColor = selectedImageColor
+        self.unSelectedTintColor = unSelectedImageColor
+
+        //self.segmentType = segmentType
+        self.selectorColor = selectorColor
+        self.selectorType = selectorType
+        self.selectorStyle = selectorStyle
+
     }
 
 
