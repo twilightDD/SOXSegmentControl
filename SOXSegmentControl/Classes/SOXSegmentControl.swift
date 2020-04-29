@@ -24,7 +24,7 @@ open class SOXSegmentControl: UIControl {
     public var selectorMovementAnimated: Bool = true
     public var selectorStyle: SelectorStyle = .square { didSet { updateSelectorViewFrame() } }
     public var selectorType: SelectorType = .background { didSet { updateSelectorViewFrame() } }
-    public var underlineBarSelectorHeight : CGFloat = 5.0  { didSet { updateSelectorViewHeight() } }
+    public var underlineBarSelectorHeight : CGFloat = 5.0  { didSet { updateSelectorViewFrame() } }
 
 
     public var selectedSegmentPath: SOXIndexPath = SOXIndexPath.init(row: 0, column: 0) {
@@ -303,10 +303,6 @@ extension SOXSegmentControl {
     private func updateSelectorViewFrame() {
         if segmentDescriptors.count == 0 { return }
 
-
-        /*
-         Breite: Breite / Zeile in Row
-         Höhe: Höhe / Zeilen*/
         let newSelectorRow = selectedSegmentPath.row
         let newSelectorColumn = selectedSegmentPath.column
 
@@ -322,6 +318,7 @@ extension SOXSegmentControl {
         var newSelectorHeight: CGFloat = 0
 
         // Selector Type
+
         switch self.selectorType {
             case .none:
                 break
@@ -374,23 +371,6 @@ extension SOXSegmentControl {
         updateSegment(atIndexPath: selectedSegmentPath, isSelected: true)
     }
 
-    private func updateSelectorViewHeight() {
-//        if selectorType == .background {
-//            let newHeight = (frame.height) / CGFloat(segmentDescriptors.count)
-//            selectorView.frame.size.height = newHeight
-//        }
-//        else if selectorType == .underlineBar {
-//
-//            moveSelectorView(toIndex: selectedSegmentIndex)
-//        }
-//
-//        updateSelectorViewStyle()
-    }
-
-    private func updateSelectorViewType() {
-        updateSelectorView()
-    }
-
     private func updateSelectorViewStyle() {
         var cornerRadius: CGFloat
         switch selectorStyle {
@@ -430,25 +410,6 @@ extension SOXSegmentControl {
             let segmentDescriptorsForRow = segmentDescriptors[row]
             let segmentDescriptor = segmentDescriptorsForRow[column]
             return segmentDescriptor
-    }
-
-
-    private func mappedButtonTitles()
-        -> [String] {
-            let buttonTitles = linearSegmentDescriptors.map { (segmentDescriptor) -> String in
-                return segmentDescriptor.title ?? ""
-            }
-
-            return buttonTitles
-    }
-
-    private func mappedButtonImageNames()
-        -> [String] {
-            let  buttonImageNames = linearSegmentDescriptors.map { (segmentDescriptor) -> String in
-                return segmentDescriptor.imageName ?? ""
-            }
-
-            return buttonImageNames
     }
 
 
